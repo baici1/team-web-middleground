@@ -7,7 +7,8 @@ import { constantMenus } from "/@/router/modules";
 import { ascending, filterTree } from "/@/router/utils";
 
 export const usePermissionStore = defineStore({
-  id: "pure-permission",
+  id: "pure-permission", //id必填，且需要唯一
+  //静态数据存储
   state: () => ({
     // 静态路由生成的菜单
     constantMenus,
@@ -19,6 +20,7 @@ export const usePermissionStore = defineStore({
     // 缓存页面keepAlive
     cachePageList: []
   }),
+  //操作state，action 里可以直接通过 this 访问 state
   actions: {
     // 获取异步路由菜单
     asyncActionRoutes(routes) {
@@ -30,7 +32,7 @@ export const usePermissionStore = defineStore({
       this.menusTree = cloneDeep(
         filterTree(ascending(this.constantMenus.concat(routes)))
       );
-
+      //获取按钮权限
       const getButtonAuth = (arrRoutes: Array<RouteConfigs>) => {
         if (!arrRoutes || !arrRoutes.length) return;
         arrRoutes.forEach((v: RouteConfigs) => {

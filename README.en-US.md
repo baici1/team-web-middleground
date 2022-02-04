@@ -1,37 +1,6 @@
-<h1>vue-pure-admin Lite Edition</h1>
+# vue-Pure-admin
 
-[![license](https://img.shields.io/github/license/xiaoxian521/vue-pure-admin.svg)](LICENSE)
+## 常用 vue 插件
 
-**English** | [中文](./README.md)
-
-## introduce
-
-The lite version is based on the shelf extracted from https://github.com/xiaoxian521/vue-pure-admin, which contains the main functions and is more suitable for actual project development
-
-## Docs
-
-<https://pure-admin-doc.vercel.app/>
-
-## Usage
-
-### Installation dependencies
-
-pnpm install
-
-### Install a package
-
-pnpm add packageName
-
-### Uninstall a package
-
-pnpm remove packageName
-
-I think you should fork the project first to develop, so that you can pull the update synchronously when I update! ! !
-
-## Supporting video tutorial
-
-bilibili: https://www.bilibili.com/video/BV1534y1S7HV/
-
-## ⚠️ Note
-
-The lite version does not accept any issues and prs. If you have any questions, please go to the full version https://github.com/xiaoxian521/vue-pure-admin/issues/new/choose to mention it, thank you! ! !
+- [进度条](https://ricostacruz.com/nprogress/)
+- [状态管理-pinia](baidu.com/link?url=7BKWbMSwnglF1fNEwKBbWbbMpOvUjx4VzImLaxVt_3q&wd=&eqid=8fcea211009e3d4b0000000661fc9542)

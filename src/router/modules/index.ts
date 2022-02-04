@@ -11,6 +11,7 @@ import {
   formatFlatteningRoutes
 } from "../utils";
 
+//查询配置项 https://pure-admin-doc.vercel.app/pages/782b6e/
 // 原始静态路由（未做任何处理）
 const routes = [homeRouter, errorRouter, externalLink];
 

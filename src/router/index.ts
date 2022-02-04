@@ -22,6 +22,8 @@ export const router: Router = createRouter({
   history: getHistoryMode(),
   routes: constantRoutes.concat(...remainingRouter),
   strict: true,
+  //处理处理当你的home滚动到底部，跳转页面也是底部的bug情况
+  // 作用：主要是让页面回到顶部
   scrollBehavior(to, from, savedPosition) {
     return new Promise(resolve => {
       if (savedPosition) {
@@ -39,8 +41,13 @@ export const router: Router = createRouter({
 
 // 路由白名单
 const whiteList = ["/login"];
-
+//跳转页面之前的处理
+/**
+ * to 的格式 查询：https://next.router.vuejs.org/zh/api/#routelocationnormalized
+ *
+ */
 router.beforeEach((to: toRouteType, _from, next) => {
+  //是否进行缓存
   if (to.meta?.keepAlive) {
     const newMatched = to.matched;
     handleAliveRoute(newMatched, "add");
@@ -49,9 +56,13 @@ router.beforeEach((to: toRouteType, _from, next) => {
       handleAliveRoute(newMatched);
     }
   }
+  //获取Session的内容
   const name = storageSession.getItem("info");
+  //开启进度条
   NProgress.start();
+  //是否存在重定向
   const externalLink = to?.redirectedFrom?.fullPath;
+  //不存在，处理matched的title进行翻译
   if (!externalLink)
     to.matched.some(item => {
       item.meta.title
@@ -61,7 +72,9 @@ router.beforeEach((to: toRouteType, _from, next) => {
           ))
         : "";
     });
+  //判断是否存在session
   if (name) {
+    //存在重定向的地址，就跳转到重定向地址去，如果不存在，就是正常路由跳转，就可以直接跳转next()
     if (_from?.name) {
       // 如果路由包含http 则是超链接 反之是普通路由
       if (externalLink && externalLink.includes("http")) {
@@ -71,9 +84,11 @@ router.beforeEach((to: toRouteType, _from, next) => {
         next();
       }
     } else {
-      // 刷新
+      // 这里针对的每次的刷新，每次的刷新第一次 to 是根目录，name 不存在
+      //获取 整体路由生成的菜单（静态、动态）的长度，如果为 0，就主动创建路由
       if (usePermissionStoreHook().wholeMenus.length === 0)
         initRouter(name.username).then((router: Router) => {
+          //判断是否存储了标签页信息
           if (!useMultiTagsStoreHook().getMultiTagsCache) {
             const handTag = (
               path: string,
@@ -145,6 +160,7 @@ router.beforeEach((to: toRouteType, _from, next) => {
       next();
     }
   } else {
+    //这里针对白名单，也是不需要 token 进入的页面
     if (to.path !== "/login") {
       if (whiteList.indexOf(to.path) !== -1) {
         next();
