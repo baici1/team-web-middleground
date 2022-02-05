@@ -2,6 +2,7 @@ export default {
   hshome: "Home",
   hslogin: "Login",
   hssysManagement: "System Manage",
+  hsteamManagement: "Team Manage",
   hsBaseinfo: "Base Info",
   hsDict: "Dict Manage",
   hseditor: "Editor",

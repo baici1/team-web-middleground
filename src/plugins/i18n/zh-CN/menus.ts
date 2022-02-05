@@ -2,6 +2,7 @@ export default {
   hshome: "首页",
   hslogin: "登陆",
   hssysManagement: "系统管理",
+  hsteamManagement: "团队管理",
   hsBaseinfo: "基础信息",
   hsDict: "字典管理",
   hseditor: "编辑器",

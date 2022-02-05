@@ -8,6 +8,7 @@ import { MotionPlugin } from "@vueuse/motion";
 import { useFontawesome } from "../src/plugins/fontawesome";
 import { useElementPlus } from "../src/plugins/element-plus";
 import { injectResponsiveStorage } from "/@/utils/storage/responsive";
+import { useTable } from "../src/plugins/vxe-table";
 
 import "animate.css";
 import "virtual:windi.css";
@@ -37,6 +38,7 @@ getServerConfig(app).then(async config => {
     .use(router)
     .use(MotionPlugin)
     .use(useElementPlus)
+    .use(useTable)
     .use(usI18n)
     .use(useFontawesome);
   await router.isReady();

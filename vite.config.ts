@@ -11,6 +11,7 @@ import ElementPlus from "unplugin-element-plus/vite";
 import removeConsole from "vite-plugin-remove-console";
 import { UserConfigExport, ConfigEnv, loadEnv } from "vite";
 import themePreprocessorPlugin from "@zougt/vite-plugin-theme-preprocessor";
+import styleImport from "vite-plugin-style-import";
 
 // 当前执行node命令时文件夹的地址（工作目录）
 const root: string = process.cwd();
@@ -166,7 +167,19 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             targets: ["ie >= 11"],
             additionalLegacyPolyfills: ["regenerator-runtime/runtime"]
           })
-        : null
+        : null,
+      //配置vxe表格
+      styleImport({
+        libs: [
+          {
+            libraryName: "vxe-table",
+            esModule: true,
+            ensureStyleFile: true,
+            resolveComponent: name => `vxe-table/es/${name}`,
+            resolveStyle: name => `vxe-table/es/${name}/style.css`
+          }
+        ]
+      })
     ],
     optimizeDeps: {
       include: [
