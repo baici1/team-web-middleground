@@ -38,4 +38,6 @@ export type setType = {
 export type userType = {
   token: string;
   name?: string;
+  userid: number;
+  teamid?: number;
 };

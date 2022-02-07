@@ -9,6 +9,9 @@ import { useFontawesome } from "../src/plugins/fontawesome";
 import { useElementPlus } from "../src/plugins/element-plus";
 import { injectResponsiveStorage } from "/@/utils/storage/responsive";
 import { useTable } from "../src/plugins/vxe-table";
+//引入icon
+import "virtual:svg-icons-register";
+import { ReSvgIcon } from "/@/components/ReSvgIcon/index";
 
 import "animate.css";
 import "virtual:windi.css";
@@ -30,6 +33,7 @@ Object.keys(directives).forEach(key => {
 import { IconifyIconOffline, IconifyIconOnline } from "./components/ReIcon";
 app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
+app.component("ReSvgIcon", ReSvgIcon);
 
 getServerConfig(app).then(async config => {
   injectResponsiveStorage(app, config);

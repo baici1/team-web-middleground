@@ -12,7 +12,9 @@ import removeConsole from "vite-plugin-remove-console";
 import { UserConfigExport, ConfigEnv, loadEnv } from "vite";
 import themePreprocessorPlugin from "@zougt/vite-plugin-theme-preprocessor";
 import styleImport from "vite-plugin-style-import";
-
+//处理icon
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
+import path from "path";
 // 当前执行node命令时文件夹的地址（工作目录）
 const root: string = process.cwd();
 
@@ -83,6 +85,23 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     },
     plugins: [
       vue(),
+      createSvgIconsPlugin({
+        // 指定需要缓存的图标文件夹
+        iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],
+        // 指定symbolId格式
+        symbolId: "icon-[dir]-[name]"
+        // /**
+        //  * 自定义插入位置
+        //  * @default: body-last
+        //  */
+        // inject?: 'body-last' | 'body-first'
+
+        // /**
+        //  * custom dom id
+        //  * @default: __svg__icons__dom__
+        //  */
+        // customDomId: '__svg__icons__dom__',
+      }),
       // jsx、tsx语法支持
       vueJsx(),
       WindiCSS(),

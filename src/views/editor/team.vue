@@ -4,11 +4,19 @@ import avatars from "/@/assets/avatars.jpg";
 import createTeamVue from "./components/editorTeam.vue";
 import editorCompanyVue from "./components/editorCompany.vue";
 import { useRoute } from "vue-router";
+import { ElNotification } from "element-plus";
 // const date: Date = new Date();
+
 //创建团队
 const route = useRoute();
 const flagTeam = ref(1);
+console.log(
+  "%c 🥔 route.params.flagTeam: ",
+  "font-size:20px;background-color: #3F7CFF;color:#fff;",
+  route.query
+);
 flagTeam.value = +route.query.flagTeam;
+
 let greetings = computed(() => {
   if (flagTeam.value === 1) {
     return "创建一个适合你自己的团队吧";
@@ -21,6 +29,12 @@ let flagCompany = ref(false);
 const updateflag = value => {
   flagCompany.value = value;
 };
+ElNotification({
+  type: "warning",
+  title: "注意",
+  message: "请分别提交信息！看到后此通知，请手动关闭！",
+  duration: 0
+});
 </script>
 
 <template>

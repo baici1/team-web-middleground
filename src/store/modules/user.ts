@@ -10,6 +10,8 @@ import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 const data = getToken();
 let token = "";
 let name = "";
+const userid = 14;
+const teamid = 0;
 if (data) {
   const dataJson = JSON.parse(data);
   if (dataJson) {
@@ -22,7 +24,9 @@ export const useUserStore = defineStore({
   id: "pure-user",
   state: (): userType => ({
     token,
-    name
+    name,
+    userid,
+    teamid
   }),
   actions: {
     SET_TOKEN(token) {
@@ -30,6 +34,12 @@ export const useUserStore = defineStore({
     },
     SET_NAME(name) {
       this.name = name;
+    },
+    SET_USERID(id) {
+      this.userid = id;
+    },
+    SET_TEAMID(id) {
+      this.teamid = id;
     },
     // 登入
     async loginByUsername(data) {
