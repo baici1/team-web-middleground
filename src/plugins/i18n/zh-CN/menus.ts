@@ -6,6 +6,8 @@ export default {
   hsteamManageInfo: "信息管理",
   hsteamManageMember: "队员管理",
   hsEditorteam: "创建&修改团队",
+  hsgameManagement: "竞赛管理",
+  hsgameManageInfo: "竞赛统计",
   hsBaseinfo: "基础信息",
   hsDict: "字典管理",
   hseditor: "编辑器",

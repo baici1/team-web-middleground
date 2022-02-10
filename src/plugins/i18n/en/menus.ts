@@ -6,6 +6,8 @@ export default {
   hsteamManageInfo: "Info Manage",
   hsteamManageMember: "Member Manage",
   hsEditorteam: "Create&Update Team",
+  hsgameManagement: "Game Manage",
+  hsgameManageInfo: "Game Info",
   hsBaseinfo: "Base Info",
   hsDict: "Dict Manage",
   hseditor: "Editor",

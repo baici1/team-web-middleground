@@ -24,6 +24,8 @@ import OfficeBuilding from "@iconify-icons/ep/office-building";
 import Notebook from "@iconify-icons/ep/notebook";
 import pictureRounded from "@iconify-icons/ep/picture-rounded";
 import messageIcon from "@iconify-icons/ep/message";
+import medalIcon from "@iconify-icons/ep/medal";
+import documentIcon from "@iconify-icons/ep/document";
 addIcon("check", Check);
 addIcon("menu", Menu);
 addIcon("home-filled", HomeFilled);
@@ -48,7 +50,8 @@ addIcon("office-building", OfficeBuilding);
 addIcon("notebook", Notebook);
 addIcon("picture-rounded", pictureRounded);
 addIcon("message-icon", messageIcon);
-
+addIcon("medal", medalIcon);
+addIcon("document", documentIcon);
 // Iconify Icon在Vue里离线使用（用于内网环境）
 // https://docs.iconify.design/icon-components/vue/offline.html
 export default defineComponent({
