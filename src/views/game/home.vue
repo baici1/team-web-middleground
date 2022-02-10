@@ -10,11 +10,13 @@ import {
 } from "./utils/home";
 import { ReTip } from "/@/components/ReTip/index";
 import { Edit, More, Delete, Plus } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 onMounted(() => {
   gameInfo.value.loading = true;
   setTimeout(() => {
     gameInfo.value.tableData = [
       {
+        id: 1,
         com: {
           c_name: "蓝桥杯",
           c_type: "A",
@@ -81,6 +83,15 @@ onMounted(() => {
     gameInfo.value.loading = false;
   }, 500);
 });
+const router = useRouter();
+let getMore = id => {
+  router.push({
+    name: "gameDetail",
+    params: {
+      id: id
+    }
+  });
+};
 </script>
 
 <template>
@@ -206,19 +217,31 @@ onMounted(() => {
             width="200"
             show-overflow
           ></vxe-column>
-          <vxe-column title="操作" fixed="right" width="200" show-overflow>
-            <el-tooltip effect="dark" content="增加" placement="top">
-              <el-button :icon="Plus" circle></el-button>
-            </el-tooltip>
-            <el-tooltip effect="dark" content="更多" placement="top">
-              <el-button :icon="More" circle></el-button>
-            </el-tooltip>
-            <el-tooltip effect="dark" content="编辑" placement="top">
-              <el-button :icon="Edit" circle></el-button>
-            </el-tooltip>
-            <el-tooltip effect="dark" content="删除" placement="top">
-              <el-button :icon="Delete" circle></el-button>
-            </el-tooltip>
+          <vxe-column
+            title="操作"
+            fixed="right"
+            width="200"
+            show-overflow
+            field="id"
+          >
+            <template #default="{ row }">
+              <el-tooltip effect="dark" content="增加" placement="top">
+                <el-button :icon="Plus" circle></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="更多" placement="top">
+                <el-button
+                  :icon="More"
+                  circle
+                  @click="getMore(row?.id)"
+                ></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="编辑" placement="top">
+                <el-button :icon="Edit" circle></el-button>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="删除" placement="top">
+                <el-button :icon="Delete" circle></el-button>
+              </el-tooltip>
+            </template>
           </vxe-column>
         </vxe-table>
       </el-col>

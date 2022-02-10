@@ -24,6 +24,16 @@ const gameRouter = {
         i18n: true,
         showLink: true
       }
+    },
+    {
+      path: "/game/detail/:id",
+      name: "gameDetail",
+      component: () => import("/@/views/game/detail.vue"),
+      meta: {
+        title: $t("menus.hsgameManageInfo"),
+        i18n: true,
+        showLink: false
+      }
     }
   ]
 };
