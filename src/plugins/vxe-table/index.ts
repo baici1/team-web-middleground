@@ -1,4 +1,4 @@
-import "xe-utils";
+import XEUtils from "xe-utils";
 import { App } from "vue";
 import { i18n } from "../i18n/index";
 import {
@@ -76,6 +76,22 @@ VXETable.setup({
   }
 });
 
+// 自定义全局的格式化处理函数
+VXETable.formats.mixin({
+  // 格式化性别
+  formatSex({ cellValue }) {
+    return cellValue ? (cellValue === "1" ? "男" : "女") : "";
+  },
+  // 格式化下拉选项
+  formatSelect({ cellValue }, list) {
+    const item = list.find(item => item.value === cellValue);
+    return item ? item.label : "";
+  },
+  // 格式化日期，默认 yyyy-MM-dd HH:mm:ss
+  formatDate({ cellValue }, format) {
+    return XEUtils.toDateString(cellValue, format || "yyyy-MM-dd HH:mm:ss");
+  }
+});
 export function useTable(app: App) {
   app
     .use(Header)

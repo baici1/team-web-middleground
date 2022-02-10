@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import avatars from "/@/assets/avatars.jpg";
-// import { useRoute } from "vue-router";
 import { commitTeam } from "/@/api/team";
 import {
   formDataTeam,
@@ -18,6 +16,7 @@ import {
 } from "./utils/team";
 import { useUserStoreHook } from "/@/store/modules/user";
 import { ElForm, ElMessage } from "element-plus";
+import { ReTip } from "/@/components/ReTip/index";
 const userStore = useUserStoreHook();
 type FormInstance = InstanceType<typeof ElForm>;
 
@@ -88,12 +87,7 @@ let commit = async (
 
 <template>
   <div class="editor-team">
-    <el-card class="top-content">
-      <div class="left-mark">
-        <img :src="avatars" title="直达仓库地址" />
-        <span>{{ greetings }}</span>
-      </div>
-    </el-card>
+    <ReTip :tips="greetings"></ReTip>
     <el-row :gutter="24" style="margin: 20px">
       <el-col
         :span="24"
