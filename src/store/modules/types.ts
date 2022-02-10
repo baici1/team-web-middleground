@@ -40,4 +40,5 @@ export type userType = {
   name?: string;
   userid: number;
   teamid?: number;
+  companyid?: number;
 };

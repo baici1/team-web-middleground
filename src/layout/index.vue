@@ -227,9 +227,7 @@ const layoutHeader = defineComponent({
         <app-main :fixed-header="set.fixedHeader" />
       </div>
       <el-scrollbar v-else>
-        <el-backtop
-          title="回到顶部"
-          target=".main-container .el-scrollbar__wrap"
+        <el-backtop title="回到顶部" target=".el-scrollbar__wrap"
           ><backTop />
         </el-backtop>
         <layout-header />

@@ -87,7 +87,7 @@ const transitionMain = defineComponent({
     <router-view>
       <template #default="{ Component, route }">
         <el-scrollbar v-if="props.fixedHeader">
-          <el-backtop title="回到顶部" target=".app-main .el-scrollbar__wrap">
+          <el-backtop title="回到顶部" target=".el-scrollbar__wrap">
             <backTop />
           </el-backtop>
           <transitionMain :route="route">

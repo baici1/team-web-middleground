@@ -1,25 +1,29 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
 import { useUserStoreHook } from "/@/store/modules/user";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { timeFormatYMD } from "/@/utils/time";
+import {
+  getTeamInfo,
+  getTeamId,
+  getCompanyInfo,
+  deleteTeam,
+  deleteCompany
+} from "/@/api/team";
 
 const router = useRouter();
 const loading = ref(false);
 const toUpdate = () => {
   router.push({
     path: "/team/editor",
-    name: "Create&UpdateTeam",
-    query: { flagTeam: 0 }
+    name: "Create&UpdateTeam"
   });
 };
 const toCreate = () => {
   router.push({
     path: "/team/editor",
-    name: "Create&UpdateTeam",
-    query: { flagTeam: 1 }
+    name: "Create&UpdateTeam"
   });
 };
 let teamInfo = ref();
@@ -30,67 +34,49 @@ let isCompany = ref(false);
 let id = useUserStoreHook().userid;
 let teamId = ref(0);
 //获取团队信息
-let getTeamInfo = async () => {
-  await axios
-    .request({
-      url: "http://127.0.0.1:20201/menage/teamInfo/read",
-      method: "GET",
-      params: {
-        id: teamId.value
-      }
-    })
-    .then(({ data }) => {
-      console.log(
-        "%c 🍵 data: ",
-        "font-size:20px;background-color: #3F7CFF;color:#fff;",
-        data
-      );
-      isTeam.value = true;
-      teamInfo.value = data.data;
-    })
-    .catch(() => {
-      ElMessage.error("获取团队信息发生错误");
+let get_team_info = async () => {
+  try {
+    const data: any = await getTeamInfo({
+      id: teamId.value
     });
+    console.log(
+      "%c 🍵 data: ",
+      "font-size:20px;background-color: #3F7CFF;color:#fff;",
+      data
+    );
+    isTeam.value = true;
+    teamInfo.value = data.data;
+  } catch (error) {
+    ElMessage.error("获取团队信息发生错误");
+  }
 };
 //发起请求获取团队id
-let getteamId = async () => {
-  await axios
-    .request({
-      url: "http://127.0.0.1:20201/menage/teamMember/teamid",
-      method: "GET",
-      params: {
-        u_id: id
-      }
-    })
-    .then(({ data }) => {
-      teamId.value = data.data;
-    })
-    .catch(() => {
-      ElMessage.error("获取团队信息发生错误");
+let get_team_id = async () => {
+  try {
+    const data: any = await getTeamId({
+      u_id: id
     });
+    teamId.value = data.data;
+  } catch (error) {
+    ElMessage.error("获取团队信息发生错误");
+  }
 };
 //获取公司信息
-async function getcompanyInfo(id) {
-  await axios
-    .request({
-      url: "http://127.0.0.1:20201/menage/company/read",
-      method: "GET",
-      params: {
-        id: id
-      }
-    })
-    .then(({ data }) => {
-      console.log(
-        "%c 🍆 data: ",
-        "font-size:20px;background-color: #33A5FF;color:#fff;",
-        data
-      );
-      isCompany.value = true;
-      companyInfo.value = data.data;
-    })
-    .catch(() => {
-      ElMessage.error("获取公司信息发生错误");
+async function get_company_info(id) {
+  try {
+    const data: any = await getCompanyInfo({
+      id: id
     });
+    console.log(
+      "%c 🍆 data: ",
+      "font-size:20px;background-color: #33A5FF;color:#fff;",
+      data
+    );
+    isCompany.value = true;
+    companyInfo.value = data.data;
+  } catch (error) {
+    ElMessage.error("获取公司信息发生错误");
+  }
 }
 //判断是否需要创建团队
 const open = () => {
@@ -102,16 +88,16 @@ const open = () => {
   });
 };
 async function team() {
-  await getteamId();
+  await get_team_id();
   console.log(
     "%c 🍐 teamId.value: ",
     "font-size:20px;background-color: #6EC1C2;color:#fff;",
     teamId.value
   );
   if (teamId.value != 0) {
-    await getTeamInfo();
+    await get_team_info();
     if (teamInfo.value?.company_id != 0) {
-      await getcompanyInfo(teamInfo.value?.company_id);
+      await get_company_info(teamInfo.value?.company_id);
     }
   } else {
     open();
@@ -125,6 +111,26 @@ let isDoCompany = computed(() => {
     return "未注册";
   }
 });
+const delete_team = async () => {
+  const res: any = await deleteTeam({
+    id: teamInfo?.value.id
+  });
+  if (res?.code === 20000) {
+    ElMessage.success("团队信息删除成功");
+  }
+};
+const delete_company = async () => {
+  const res: any = await deleteCompany({
+    id: companyInfo?.value.id
+  });
+  if (res?.code === 20000) {
+    ElMessage.success("公司信息删除成功");
+  }
+};
+let deleteInfo = async () => {
+  await delete_team();
+  await delete_company();
+};
 </script>
 
 <template>
@@ -134,7 +140,10 @@ let isDoCompany = computed(() => {
       <template #header>
         <div class="card-header">
           <span>{{ teamInfo?.name }}</span>
-          <el-button type="text" @click="toUpdate">编辑</el-button>
+          <div>
+            <el-button type="text" @click="toUpdate">编辑</el-button>
+            <el-button type="text" @click="deleteInfo">删除</el-button>
+          </div>
         </div>
       </template>
       <el-skeleton :rows="5" :loading="loading" />

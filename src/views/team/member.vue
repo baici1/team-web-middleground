@@ -15,7 +15,9 @@ import {
 } from "vxe-table";
 import axios from "axios";
 import { ElMessage, ElNotification } from "element-plus";
+import { useUserStoreHook } from "/@/store/modules/user";
 const xGrid = ref({} as VxeGridInstance);
+let id = useUserStoreHook().userid;
 const gridOptions = reactive({
   border: true, //是否带有边框
   resizable: true, //所有的列是否允许拖动列宽调整大小
@@ -129,7 +131,7 @@ const gridOptions = reactive({
         const queryParams: any = {
           page: page.currentPage,
           limit: page.pageSize,
-          u_id: 1
+          u_id: id
         };
         return axios
           .request({
