@@ -1,88 +1,25 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import {
   gameInfo,
   formatterType,
   formatterLevel,
-  formattercomStatus,
   formatentryIdentify,
-  formatentryStatus
+  formatentryStatus,
+  get_all_gameInfo,
+  editorForm,
+  editorFormRules,
+  addMember,
+  deleteMember,
+  dialogVisible,
+  closeDialog,
+  enterDialog,
+  handleClose
 } from "./utils/home";
+// import { ref } from "vue";
 import { ReTip } from "/@/components/ReTip/index";
 import { Edit, More, Delete, Plus } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-onMounted(() => {
-  gameInfo.value.loading = true;
-  setTimeout(() => {
-    gameInfo.value.tableData = [
-      {
-        id: 1,
-        com: {
-          c_name: "蓝桥杯",
-          c_type: "A",
-          level: "省赛",
-          start_time: "2020-11-15T07:14:41.000Z",
-          end_time: "2020-11-17T07:14:41.000Z",
-          status: "已结束"
-        },
-        entry: {
-          join_time: "2020-11-14T07:14:41.000Z",
-          status: 1,
-          identify: 1,
-          rank: "一等奖",
-          name: "专利"
-        },
-        project: {
-          project_code: "111",
-          project_name: "无"
-        }
-      },
-      {
-        com: {
-          c_name: "蓝桥杯",
-          c_type: "B",
-          level: "省赛",
-          start_time: "2020-11-14T07:14:41.000Z",
-          end_time: "2020-11-14T07:14:41.000Z",
-          status: "已结束"
-        },
-        entry: {
-          join_time: "2020-11-14T07:14:41.000Z",
-          status: 1,
-          identify: 1,
-          rank: "一等奖",
-          name: "专利"
-        },
-        project: {
-          project_code: "111",
-          project_name: "无"
-        }
-      },
-      {
-        com: {
-          c_name: "蓝桥杯",
-          c_type: "B",
-          level: "省赛",
-          start_time: "2020-11-14T07:14:41.000Z",
-          end_time: "2020-11-14T07:14:41.000Z",
-          status: "已结束"
-        },
-        entry: {
-          join_time: "2020-11-14T07:14:41.000Z",
-          status: 1,
-          identify: 1,
-          rank: "一等奖",
-          name: "专利"
-        },
-        project: {
-          project_code: "111",
-          project_name: "无"
-        }
-      }
-    ];
-    gameInfo.value.loading = false;
-  }, 500);
-});
+
 const router = useRouter();
 let getMore = id => {
   router.push({
@@ -92,11 +29,13 @@ let getMore = id => {
     }
   });
 };
+get_all_gameInfo();
 </script>
 
 <template>
   <div class="game-home">
     <ReTip tips="竞赛的魅力在于每一次比赛中的拼搏！"></ReTip>
+    <!-- 显示表格信息 -->
     <el-row :gutter="24" style="margin: 20px">
       <el-col
         :span="24"
@@ -128,55 +67,67 @@ let getMore = id => {
         >
           <vxe-column type="seq" width="60"></vxe-column>
           <vxe-column
-            field="com.c_name"
+            field="competition.com_sche.version"
+            title="届数"
+            width="100"
+          ></vxe-column>
+          <vxe-column
+            field="competition.com_info.c_name"
             title="比赛名"
             sortable
             width="200"
           ></vxe-column>
           <vxe-column
-            field="com.c_type"
+            field="competition.com_info.c_type"
             title="比赛类型"
             :filters="gameInfo.c_typeList"
             :formatter="formatterType"
             width="100"
           ></vxe-column>
           <vxe-column
-            field="com.level"
+            field="competition.com_sche.level"
             title="比赛级别"
             width="100"
             :filters="gameInfo.level"
             :formatter="formatterLevel"
           ></vxe-column>
           <vxe-column
-            field="com.start_time"
+            field="competition.com_sche.start_time"
             title="开始时间"
             sortable
             width="200"
             formatter="formatDate"
           ></vxe-column>
           <vxe-column
-            field="com.end_time"
+            field="competition.com_sche.end_time"
             title="结束时间"
             sortable
             width="200"
             formatter="formatDate"
           ></vxe-column>
-          <vxe-column
+          <!-- <vxe-column
             field="com.status"
             title="状态"
             width="100"
             :filters="gameInfo.status"
             :formatter="formattercomStatus"
-          ></vxe-column>
+          ></vxe-column> -->
           <vxe-column
-            field="entry.join_time"
+            field="competition.com_sche.r_start_time"
             title="参赛时间"
             sortable
             width="200"
             formatter="formatDate"
           ></vxe-column>
           <vxe-column
-            field="entry.identify"
+            field="competition.com_sche.r_end_time"
+            title="赛事结束"
+            sortable
+            width="200"
+            formatter="formatDate"
+          ></vxe-column>
+          <vxe-column
+            field="members.identify"
             title="职位"
             width="100"
             :filters="gameInfo.identify"
@@ -184,7 +135,7 @@ let getMore = id => {
             show-overflow
           ></vxe-column>
           <vxe-column
-            field="entry.status"
+            field="form.status"
             title="申请"
             sortable
             :filters="gameInfo.e_status"
@@ -204,14 +155,14 @@ let getMore = id => {
             width="200"
           ></vxe-column>
           <vxe-column
-            field="entry.rank"
+            field="form.rank"
             title="名次"
             fixed="right"
             width="100"
             show-overflow
           ></vxe-column>
           <vxe-column
-            field="entry.name"
+            field="form.ach_name"
             title="成果名称"
             fixed="right"
             width="200"
@@ -222,17 +173,21 @@ let getMore = id => {
             fixed="right"
             width="200"
             show-overflow
-            field="id"
+            field="form.id"
           >
             <template #default="{ row }">
               <el-tooltip effect="dark" content="增加" placement="top">
-                <el-button :icon="Plus" circle></el-button>
+                <el-button
+                  :icon="Plus"
+                  circle
+                  @click="dialogVisible = true"
+                ></el-button>
               </el-tooltip>
               <el-tooltip effect="dark" content="更多" placement="top">
                 <el-button
                   :icon="More"
                   circle
-                  @click="getMore(row?.id)"
+                  @click="getMore(row.form?.id)"
                 ></el-button>
               </el-tooltip>
               <el-tooltip effect="dark" content="编辑" placement="top">
@@ -246,6 +201,87 @@ let getMore = id => {
         </vxe-table>
       </el-col>
     </el-row>
+    <!-- 弹出框 -->
+    <el-dialog
+      v-model="dialogVisible"
+      title="Tips"
+      width="40%"
+      custom-class="dialog"
+      :before-close="handleClose"
+    >
+      <el-alert
+        title="默认创建者为队长"
+        type="warning"
+        style="margin-bottom: 10px"
+      />
+      <el-form
+        ref="ruleFormRef"
+        :model="editorForm"
+        :rules="editorFormRules"
+        class="demo-ruleForm"
+        label-position="top"
+      >
+        <el-form-item label="届数" prop="version">
+          <el-input v-model="editorForm.version"></el-input>
+        </el-form-item>
+        <el-form-item label="输入比赛名" prop="c_name">
+          <el-input v-model="editorForm.c_name"></el-input>
+        </el-form-item>
+        <el-form-item label="比赛级别" prop="level">
+          <el-input v-model="editorForm.level"></el-input>
+        </el-form-item>
+      </el-form>
+      <div>
+        <el-button
+          size="small"
+          type="primary"
+          :icon="Edit"
+          @click="addMember(editorForm)"
+          >新增菜单参数</el-button
+        >
+        <el-table :data="editorForm.members" style="width: 100%">
+          <el-table-column
+            align="left"
+            prop="identify"
+            label="身份"
+            width="180"
+          >
+            <template #default="scope">
+              <el-select v-model="scope.row.identify" placeholder="请选择">
+                <el-option key="leader" value="1" label="队长" />
+                <el-option key="member" value="2" label="队员" />
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" prop="phone" label="手机号" width="180">
+            <template #default="scope">
+              <div>
+                <el-input v-model="scope.row.phone" />
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column align="left">
+            <template #default="scope">
+              <div>
+                <el-button
+                  type="danger"
+                  size="small"
+                  :icon="Delete"
+                  @click="deleteMember(editorForm.members, scope.$index)"
+                  >删除</el-button
+                >
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="closeDialog">Cancel</el-button>
+          <el-button type="primary" @click="enterDialog"> Confirm </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 

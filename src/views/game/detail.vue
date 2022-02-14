@@ -2,62 +2,26 @@
 import { ref } from "vue";
 import { ReTip } from "/@/components/ReTip/index";
 import { timeFormatYMD } from "/@/utils/time";
+import {
+  get_a_gameInfo,
+  formDetail,
+  get_student_info,
+  studentsInfo
+} from "./utils/home";
+import { useRoute } from "vue-router";
+const route = useRoute();
 let isGame = ref(true);
 let loading = ref(false);
-let competition = ref({
-  c_name: "蓝桥杯",
-  c_type: "A",
-  level: "省赛",
-  start_time: "2020-11-15T07:14:41.000Z",
-  end_time: "2020-11-17T07:14:41.000Z",
-  status: "已结束"
-});
-let entry = ref({
-  name: "lala",
-  join_time: "2020-11-14T07:14:41.000Z",
-  status: 1,
-  identify: 1,
-  rank: "一等奖",
-  achieve_name: "专利",
-  project_code: "111",
-  project_name: "无",
-  introduction: "好",
-  teacher: "杨澳宇"
-});
-const tableData1 = ref([
-  {
-    id: 10001,
-    name: "Test1",
-    role: "Develop",
-    sex: "Man",
-    age: 28,
-    address: "test abc"
-  },
-  {
-    id: 10002,
-    name: "Test2",
-    role: "Test",
-    sex: "Women",
-    age: 22,
-    address: "Guangzhou"
-  },
-  {
-    id: 10003,
-    name: "Test3",
-    role: "PM",
-    sex: "Man",
-    age: 32,
-    address: "Shanghai"
-  },
-  {
-    id: 10004,
-    name: "Test4",
-    role: "Designer",
-    sex: "Women",
-    age: 24,
-    address: "Shanghai"
+let array = [];
+let run = async () => {
+  await get_a_gameInfo(route.params.id);
+  for (let i = 0; i < formDetail.value.members.length; i++) {
+    const data: any = await get_student_info(formDetail.value.members[i].u_id);
+    array.push(data);
   }
-]);
+  studentsInfo.value = array;
+};
+run();
 </script>
 
 <template>
@@ -89,23 +53,25 @@ const tableData1 = ref([
           <el-skeleton :rows="5" :loading="loading" />
           <el-descriptions direction="vertical" :column="3" :border="true">
             <el-descriptions-item label="比赛名称">
-              {{ competition?.c_name }}
+              {{ formDetail.competition?.com_info.c_name }}
             </el-descriptions-item>
             <el-descriptions-item label="比赛类型">
-              {{ competition?.c_type }}
+              {{ formDetail.competition?.com_info.c_type }}
             </el-descriptions-item>
             <el-descriptions-item label="比赛级别">
-              {{ competition?.level }}
+              {{ formDetail.competition?.com_sche.level }}
             </el-descriptions-item>
-            <el-descriptions-item label="创建时间">
-              {{ timeFormatYMD(competition?.start_time) }}
+            <el-descriptions-item label="报名开始">
+              {{ timeFormatYMD(formDetail.competition?.com_sche.start_time) }}
             </el-descriptions-item>
-            <el-descriptions-item label="结束时间">
-              {{ timeFormatYMD(competition?.end_time) }}
+            <el-descriptions-item label="报名结束">
+              {{ timeFormatYMD(formDetail.competition?.com_sche.end_time) }}
             </el-descriptions-item>
-
-            <el-descriptions-item label="比赛状态">
-              <el-tag> {{ competition?.status }}</el-tag>
+            <el-descriptions-item label="比赛开始">
+              {{ timeFormatYMD(formDetail.competition?.com_sche.r_start_time) }}
+            </el-descriptions-item>
+            <el-descriptions-item label="比赛结束">
+              {{ timeFormatYMD(formDetail.competition?.com_sche.r_end_time) }}
             </el-descriptions-item>
           </el-descriptions>
         </el-card>
@@ -143,35 +109,29 @@ const tableData1 = ref([
           </template>
           <el-skeleton :rows="5" :loading="loading" />
           <el-descriptions direction="vertical" :column="3" :border="true">
-            <el-descriptions-item label="职位">
-              {{ entry?.name }}
-            </el-descriptions-item>
-            <el-descriptions-item label="职位">
-              <el-tag>{{ entry?.identify }}</el-tag>
-            </el-descriptions-item>
-            <el-descriptions-item label="参赛时间">
-              {{ timeFormatYMD(entry?.join_time) }}
+            <el-descriptions-item label="队长姓名">
+              {{ studentsInfo[0]?.real_name }}
             </el-descriptions-item>
             <el-descriptions-item label="申请状态">
-              <el-tag> {{ entry?.status }}</el-tag>
+              <el-tag> {{ formDetail.form?.status }}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="获奖名称">
-              {{ entry?.rank }}
+              {{ formDetail.form?.rank }}
             </el-descriptions-item>
             <el-descriptions-item label="成果展示">
-              <el-tag> {{ entry?.achieve_name }}</el-tag>
+              <el-tag> {{ formDetail.form?.ach_name }}</el-tag>
             </el-descriptions-item>
-            <el-descriptions-item label="指导老师">
+            <!-- <el-descriptions-item label="指导老师">
               {{ entry?.teacher }}
-            </el-descriptions-item>
+            </el-descriptions-item> -->
             <el-descriptions-item label="项目编号">
-              {{ entry?.project_code }}
+              {{ formDetail.project?.project_code }}
             </el-descriptions-item>
             <el-descriptions-item label="项目名称">
-              {{ entry?.project_name }}
+              {{ formDetail.project?.project_name }}
             </el-descriptions-item>
             <el-descriptions-item label="项目简介" :span="2">
-              {{ entry?.introduction }}
+              {{ formDetail.project?.introduction }}
             </el-descriptions-item>
           </el-descriptions>
         </el-card>
@@ -208,11 +168,27 @@ const tableData1 = ref([
             </div>
           </template>
 
-          <vxe-table :data="tableData1">
+          <vxe-table :data="studentsInfo">
             <vxe-column type="seq" width="60"></vxe-column>
-            <vxe-column field="name" title="Name"></vxe-column>
-            <vxe-column field="sex" title="Sex"></vxe-column>
-            <vxe-column field="age" title="Age"></vxe-column>
+            <vxe-column field="real_name" title="Name" width="100"></vxe-column>
+            <vxe-column field="email" title="email" width="150"></vxe-column>
+            <vxe-column field="gender" title="gender" width="100"></vxe-column>
+            <vxe-column field="degree" title="degree" width="100"></vxe-column>
+            <vxe-column field="grade" title="grade" width="100"></vxe-column>
+            <vxe-column field="QQ" title="QQ" width="100"></vxe-column>
+            <vxe-column field="order" title="order" width="100"></vxe-column>
+            <vxe-column field="major" title="major" width="100"></vxe-column>
+            <vxe-column
+              field="class_num"
+              title="class_num"
+              width="100"
+            ></vxe-column>
+            <vxe-column
+              field="specialty"
+              title="specialty"
+              width="100"
+            ></vxe-column>
+            <vxe-column field="wechat" title="wechat" width="100"></vxe-column>
           </vxe-table>
         </el-card>
       </el-col>

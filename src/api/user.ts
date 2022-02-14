@@ -24,3 +24,9 @@ export const refreshToken = (data: object) => {
 // export const searchVague = (data: object) => {
 //   return http.request("post", "/searchVague", { data });
 // };
+//获取学生详情信息
+export const getStudentInfo = (params?: object) => {
+  return http.request("get", "http://127.0.0.1:20201/menage/student/read", {
+    params
+  });
+};

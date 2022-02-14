@@ -9,3 +9,7 @@ export function timeFormatMD(time): string {
 export function timeFormatYMD(time): string {
   return dayjs(time).format("YYYY-MM-DD");
 }
+
+export function timeFormat(time, format): string {
+  return dayjs(time).format(format);
+}

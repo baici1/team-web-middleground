@@ -38,6 +38,11 @@ const permissionRouter = {
 // 添加不同按钮权限到/permission/button页面中
 function setDifAuthority(authority, routes) {
   routes.children[1].meta.authority = [authority];
+  console.log(
+    "%c 🍞 routes.children[1].meta.authority: ",
+    "font-size:20px;background-color: #465975;color:#fff;",
+    routes.children[1].meta.authority
+  );
   return routes;
 }
 

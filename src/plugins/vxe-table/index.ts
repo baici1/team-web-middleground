@@ -1,6 +1,6 @@
-import XEUtils from "xe-utils";
 import { App } from "vue";
 import { i18n } from "../i18n/index";
+import { timeFormat } from "/@/utils/time";
 import {
   // 核心
   VXETable,
@@ -89,7 +89,7 @@ VXETable.formats.mixin({
   },
   // 格式化日期，默认 yyyy-MM-dd HH:mm:ss
   formatDate({ cellValue }, format) {
-    return XEUtils.toDateString(cellValue, format || "yyyy-MM-dd HH:mm:ss");
+    return timeFormat(cellValue, format || "YYYY-MM-DD");
   }
 });
 export function useTable(app: App) {

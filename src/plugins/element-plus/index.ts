@@ -44,6 +44,10 @@ import {
   ElCollapse,
   ElCollapseItem,
   ElTreeV2,
+  ElOption,
+  ElSelect,
+  ElTable,
+  ElTableColumn,
   // 指令
   ElLoading,
   ElInfiniteScroll
@@ -95,6 +99,10 @@ const components = [
   ElAvatar,
   ElEmpty,
   ElCollapse,
+  ElOption,
+  ElSelect,
+  ElTable,
+  ElTableColumn,
   ElCollapseItem,
   ElTreeV2
 ];
