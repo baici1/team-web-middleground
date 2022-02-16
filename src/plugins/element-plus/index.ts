@@ -48,6 +48,7 @@ import {
   ElSelect,
   ElTable,
   ElTableColumn,
+  ElCascaderPanel,
   // 指令
   ElLoading,
   ElInfiniteScroll
@@ -103,6 +104,7 @@ const components = [
   ElSelect,
   ElTable,
   ElTableColumn,
+  ElCascaderPanel,
   ElCollapseItem,
   ElTreeV2
 ];

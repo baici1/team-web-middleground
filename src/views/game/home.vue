@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import {
+  isEdit,
   gameInfo,
   formatterType,
   formatterLevel,
   formatentryIdentify,
   formatentryStatus,
   get_all_gameInfo,
-  editorForm,
-  editorFormRules,
+  Form,
+  FormRules,
   addMember,
   deleteMember,
   dialogVisible,
   closeDialog,
   enterDialog,
-  handleClose
+  handleClose,
+  dialogTitle,
+  cascaderOptions,
+  cascaderChange,
+  createForm,
+  editorForm
 } from "./utils/home";
 // import { ref } from "vue";
 import { ReTip } from "/@/components/ReTip/index";
@@ -177,11 +183,7 @@ get_all_gameInfo();
           >
             <template #default="{ row }">
               <el-tooltip effect="dark" content="增加" placement="top">
-                <el-button
-                  :icon="Plus"
-                  circle
-                  @click="dialogVisible = true"
-                ></el-button>
+                <el-button :icon="Plus" circle @click="createForm"></el-button>
               </el-tooltip>
               <el-tooltip effect="dark" content="更多" placement="top">
                 <el-button
@@ -191,10 +193,11 @@ get_all_gameInfo();
                 ></el-button>
               </el-tooltip>
               <el-tooltip effect="dark" content="编辑" placement="top">
-                <el-button :icon="Edit" circle></el-button>
-              </el-tooltip>
-              <el-tooltip effect="dark" content="删除" placement="top">
-                <el-button :icon="Delete" circle></el-button>
+                <el-button
+                  :icon="Edit"
+                  circle
+                  @click="editorForm(row.form?.id)"
+                ></el-button>
               </el-tooltip>
             </template>
           </vxe-column>
@@ -204,24 +207,24 @@ get_all_gameInfo();
     <!-- 弹出框 -->
     <el-dialog
       v-model="dialogVisible"
-      title="Tips"
+      :title="dialogTitle"
       width="40%"
       custom-class="dialog"
       :before-close="handleClose"
     >
       <el-alert
-        title="默认创建者为队长"
+        title="默认创建者为队长，同时增加的队员需要注册手机号"
         type="warning"
         style="margin-bottom: 10px"
       />
       <el-form
         ref="ruleFormRef"
-        :model="editorForm"
-        :rules="editorFormRules"
+        :model="Form"
+        :rules="FormRules"
         class="demo-ruleForm"
         label-position="top"
       >
-        <el-form-item label="届数" prop="version">
+        <!-- <el-form-item label="届数" prop="version">
           <el-input v-model="editorForm.version"></el-input>
         </el-form-item>
         <el-form-item label="输入比赛名" prop="c_name">
@@ -229,17 +232,24 @@ get_all_gameInfo();
         </el-form-item>
         <el-form-item label="比赛级别" prop="level">
           <el-input v-model="editorForm.level"></el-input>
-        </el-form-item>
+        </el-form-item> -->
+        <el-cascader-panel
+          :options="cascaderOptions"
+          v-model="Form.cmp_id"
+          @change="cascaderChange"
+          style="margin-bottom: 10px"
+        />
       </el-form>
       <div>
         <el-button
           size="small"
           type="primary"
           :icon="Edit"
-          @click="addMember(editorForm)"
-          >新增菜单参数</el-button
+          @click="addMember(Form)"
         >
-        <el-table :data="editorForm.members" style="width: 100%">
+          新增队员
+        </el-button>
+        <el-table :data="Form.members" style="width: 100%">
           <el-table-column
             align="left"
             prop="identify"
@@ -248,8 +258,8 @@ get_all_gameInfo();
           >
             <template #default="scope">
               <el-select v-model="scope.row.identify" placeholder="请选择">
-                <el-option key="leader" value="1" label="队长" />
-                <el-option key="member" value="2" label="队员" />
+                <el-option key="leader" :value="1" label="队长" />
+                <el-option key="member" :value="2" label="队员" />
               </el-select>
             </template>
           </el-table-column>
@@ -267,7 +277,8 @@ get_all_gameInfo();
                   type="danger"
                   size="small"
                   :icon="Delete"
-                  @click="deleteMember(editorForm.members, scope.$index)"
+                  :disabled="isEdit"
+                  @click="deleteMember(Form.members, scope.$index)"
                   >删除</el-button
                 >
               </div>
@@ -277,8 +288,8 @@ get_all_gameInfo();
       </div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="closeDialog">Cancel</el-button>
-          <el-button type="primary" @click="enterDialog"> Confirm </el-button>
+          <el-button @click="closeDialog">取消</el-button>
+          <el-button type="primary" @click="enterDialog"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>

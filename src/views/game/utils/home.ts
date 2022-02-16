@@ -1,8 +1,16 @@
 import { ElMessage } from "element-plus";
 import { VxeColumnPropTypes } from "vxe-table";
 import { ref } from "vue";
-import { getAllGameInfo, getAGameInfo } from "/@/api/game";
+import {
+  getAllGameInfo,
+  getAGameInfo,
+  getEntryFormDetail,
+  createEntryFormDetail,
+  updateEntryFormDetail
+} from "/@/api/game";
 import { getStudentInfo } from "/@/api/user";
+import { getComSelectList } from "/@/api/competition";
+import type { CascaderOption } from "element-plus";
 export const gameInfo = ref({
   loading: false,
   tableData: [] as any[],
@@ -116,7 +124,7 @@ export const get_all_gameInfo = async () => {
       u_id: 1
     });
     gameInfo.value.tableData = data.data;
-  } catch (response) {
+  } catch ({ response }) {
     ElMessage.error(response.data.data);
   } finally {
     gameInfo.value.loading = false;
@@ -157,21 +165,56 @@ export const get_a_gameInfo = async id => {
 export const isEdit = ref(false);
 //处理弹出框事件
 export const dialogVisible = ref(false);
-export const editorForm = ref({
-  c_name: "",
-  version: "",
-  level: "",
-  members: []
+export const dialogTitle = ref("创建");
+export const Form = ref({
+  id: 0,
+  cmp_id: 0,
+  p_id: 0,
+  members: [],
+  project_name: "",
+  introduction: ""
 });
 const initForm = () => {
-  editorForm.value = {
-    c_name: "",
-    version: "",
-    level: "",
-    members: []
+  Form.value = {
+    id: 0,
+    cmp_id: 0,
+    p_id: 0,
+    members: [{ u_id: 0, identify: 1, phone: "13337474745" }],
+    project_name: "",
+    introduction: ""
   };
 };
-export const editorFormRules = ref({
+//创建form信息
+export const create_entry_gameInfo = async () => {
+  try {
+    const data: any = await createEntryFormDetail(Form.value);
+    ElMessage.success(data.msg);
+  } catch ({ response }) {
+    ElMessage.error(response.data.msg);
+  }
+};
+//查询form信息
+export const get_entry_gameInfo = async id => {
+  const data: any = await getEntryFormDetail({
+    id: id
+  });
+  console.log(
+    "%c 🍮 data: ",
+    "font-size:20px;background-color: #465975;color:#fff;",
+    data
+  );
+  Form.value = data.data;
+};
+//修改form信息
+export const update_entry_formDetail = async () => {
+  try {
+    const data: any = await updateEntryFormDetail(Form.value);
+    ElMessage.success(data.msg);
+  } catch ({ response }) {
+    ElMessage.error(response.data.msg);
+  }
+};
+export const FormRules = ref({
   c_name: [
     {
       required: true,
@@ -196,32 +239,86 @@ export const editorFormRules = ref({
 });
 
 // 新增成员
-export const addMember = editorForm => {
-  if (!editorForm.members) {
-    editorForm.value.members = [];
+export const addMember = Form => {
+  if (!Form.members) {
+    Form.value.members = [];
   }
-  editorForm.members.push({
-    identify: "",
+  Form.members.push({
+    u_id: 0,
+    identify: 0,
     phone: ""
   });
 };
-// 删除参数
+// 删除成员
 export const deleteMember = (members, index) => {
   members.splice(index, 1);
 };
+//关闭对话框
 export const closeDialog = () => {
   initForm();
   dialogVisible.value = false;
 };
+//确认对话框
 export const enterDialog = () => {
   console.log(
-    "%c 🍷 editorForm: ",
-    "font-size:20px;background-color: #F5CE50;color:#fff;",
-    editorForm.value
+    "%c 🥟 isEdit.value: ",
+    "font-size:20px;background-color: #7F2B82;color:#fff;",
+    isEdit.value
   );
+  if (isEdit.value) {
+    update_entry_formDetail();
+  } else {
+    create_entry_gameInfo();
+  }
   dialogVisible.value = false;
 };
 export const handleClose = done => {
   initForm();
   done();
+};
+
+//弹出框创建参赛表
+export const addform = () => {
+  dialogTitle.value = "创建参赛表";
+  isEdit.value = false;
+};
+
+//与联级选择相关
+export const cascaderOptions = ref([] as CascaderOption[]);
+//联级选择器改变
+export const cascaderChange = value => {
+  console.log(
+    "%c 🥘 value: ",
+    "font-size:20px;background-color: #6EC1C2;color:#fff;",
+    value
+  );
+  Form.value.cmp_id = value[2];
+};
+//获取比赛信息树形数据
+export const get_com_selectList = async () => {
+  const data: any = await getComSelectList();
+  console.log(
+    "%c 🥩 data: ",
+    "font-size:20px;background-color: #465975;color:#fff;",
+    data
+  );
+  cascaderOptions.value = data.data;
+  for (let index = 0; index < cascaderOptions.value.length; index++) {
+    cascaderOptions.value[index].disabled = isEdit.value;
+  }
+};
+
+export const createForm = async () => {
+  get_com_selectList();
+  initForm();
+  dialogVisible.value = true;
+  isEdit.value = false;
+  dialogTitle.value = "创建参赛表";
+};
+export const editorForm = async id => {
+  get_com_selectList();
+  get_entry_gameInfo(id);
+  dialogVisible.value = true;
+  isEdit.value = true;
+  dialogTitle.value = "修改参赛表";
 };
