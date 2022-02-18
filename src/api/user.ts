@@ -13,7 +13,7 @@ export const getVerify = (): userType => {
 
 // 登录
 export const getLogin = (data: object) => {
-  return http.request("post", "/login", { data });
+  return http.request("post", "http://127.0.0.1:20201/users/login", { data });
 };
 
 // 刷新token

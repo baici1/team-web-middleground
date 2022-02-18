@@ -1,3 +1,4 @@
+import { getToken } from "/@/utils/auth";
 import { toRouteType } from "./types";
 import { openLink } from "/@/utils/link";
 import NProgress from "/@/utils/progress";
@@ -58,6 +59,12 @@ router.beforeEach((to: toRouteType, _from, next) => {
   }
   //获取Session的内容
   const name = storageSession.getItem("info");
+  console.log(
+    "%c 🌰 name: ",
+    "font-size:20px;background-color: #6EC1C2;color:#fff;",
+    name
+  );
+  const token = getToken();
   //开启进度条
   NProgress.start();
   //是否存在重定向
@@ -72,8 +79,8 @@ router.beforeEach((to: toRouteType, _from, next) => {
           ))
         : "";
     });
-  //判断是否存在session
-  if (name) {
+  //判断是否存在token
+  if (token) {
     //存在重定向的地址，就跳转到重定向地址去，如果不存在，就是正常路由跳转，就可以直接跳转next()
     if (_from?.name) {
       // 如果路由包含http 则是超链接 反之是普通路由
@@ -87,7 +94,7 @@ router.beforeEach((to: toRouteType, _from, next) => {
       // 这里针对的每次的刷新，每次的刷新第一次 to 是根目录，name 不存在
       //获取 整体路由生成的菜单（静态、动态）的长度，如果为 0，就主动创建路由
       if (usePermissionStoreHook().wholeMenus.length === 0)
-        initRouter(name.username).then((router: Router) => {
+        initRouter("admin").then((router: Router) => {
           //判断是否存储了标签页信息
           if (!useMultiTagsStoreHook().getMultiTagsCache) {
             const handTag = (

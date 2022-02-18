@@ -13,3 +13,7 @@ export function timeFormatYMD(time): string {
 export function timeFormat(time, format): string {
   return dayjs(time).format(format);
 }
+
+export function checkGender(gender: number): string {
+  return gender ? "男" : "女";
+}

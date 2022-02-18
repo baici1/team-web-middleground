@@ -16,6 +16,10 @@ const props = defineProps({
   },
   classOption: {
     type: Object as PropType<unknown>
+  },
+  number: {
+    type: Number,
+    default: 7
   }
 });
 const emit = defineEmits<{
@@ -68,7 +72,7 @@ let defaultOption = computed(() => {
     //步长
     step: 1,
     //启动无缝滚动最小数据数
-    limitMoveNum: 7,
+    limitMoveNum: props.number,
     //是否启用鼠标hover控制
     hoverStop: true,
     // bottom 往下 top 往上(默认) left 向左 right 向右

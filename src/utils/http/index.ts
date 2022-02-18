@@ -1,6 +1,6 @@
+import { ElMessage } from "element-plus";
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
-  resultType,
   PureHttpError,
   RequestMethods,
   PureHttpResoponse,
@@ -10,7 +10,6 @@ import qs from "qs";
 import NProgress from "../progress";
 // import { loadEnv } from "@build/index";
 import { getToken } from "/@/utils/auth";
-import { useUserStoreHook } from "/@/store/modules/user";
 
 // 加载环境变量 VITE_PROXY_DOMAIN（开发环境）  VITE_PROXY_DOMAIN_REAL（打包后的线上环境）
 // const { VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = loadEnv();
@@ -66,13 +65,8 @@ class PureHttp {
           const now = new Date().getTime();
           const expired = parseInt(data.expires) - now <= 0;
           if (expired) {
-            // token过期刷新
-            useUserStoreHook()
-              .refreshToken(data)
-              .then((res: resultType) => {
-                config.headers["Authorization"] = "Bearer " + res.accessToken;
-                return $config;
-              });
+            ElMessage.warning("信息即将过期");
+            return $config;
           } else {
             config.headers["Authorization"] = "Bearer " + data.accessToken;
             return $config;

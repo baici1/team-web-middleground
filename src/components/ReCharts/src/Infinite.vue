@@ -48,6 +48,11 @@ let listData = ref([
     date: "2021-09-01",
     name: "蓝桥杯",
     star: "省一"
+  },
+  {
+    date: "2021-09-01",
+    name: "蓝桥杯",
+    star: "省一"
   }
 ]);
 let classOption = reactive({
@@ -67,6 +72,7 @@ let classOption = reactive({
       :data="listData"
       :class-option="classOption"
       class="warp"
+      :number="15"
     >
       <ul class="item">
         <li v-for="(item, index) in listData" :key="index">
@@ -103,7 +109,7 @@ let classOption = reactive({
 
   .warp {
     width: 95%;
-    height: 225px;
+    height: 400px;
     margin: 0 auto;
     overflow: hidden;
 

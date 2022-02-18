@@ -179,7 +179,7 @@ const initForm = () => {
     id: 0,
     cmp_id: 0,
     p_id: 0,
-    members: [{ u_id: 0, identify: 1, phone: "13337474745" }],
+    members: [{ u_id: 0, identify: 1, phone: "13337474745", isEdit: true }],
     project_name: "",
     introduction: ""
   };
@@ -204,6 +204,7 @@ export const get_entry_gameInfo = async id => {
     data
   );
   Form.value = data.data;
+  Form.value.members[0].isEdit = true;
 };
 //修改form信息
 export const update_entry_formDetail = async () => {
@@ -245,7 +246,7 @@ export const addMember = Form => {
   }
   Form.members.push({
     u_id: 0,
-    identify: 0,
+    identify: 2,
     phone: ""
   });
 };

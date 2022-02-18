@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStoreHook } from "/@/store/modules/user";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { timeFormatYMD } from "/@/utils/time";
+import { timeFormatYMD } from "../../utils/tools";
 import {
   getTeamInfo,
   getTeamId,

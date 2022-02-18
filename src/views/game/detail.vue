@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { ReTip } from "/@/components/ReTip/index";
-import { timeFormatYMD } from "/@/utils/time";
+import { timeFormatYMD } from "../../utils/tools";
 import {
   get_a_gameInfo,
   formDetail,

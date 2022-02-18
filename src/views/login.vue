@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { initRouter } from "/@/router/utils";
 import { storageSession } from "/@/utils/storage";
+import { useUserStoreHook } from "/@/store/modules/user";
 import { addClass, removeClass } from "/@/utils/operate";
 import bg from "/@/assets/login/bg.png";
 import avatar from "/@/assets/login/avatar.svg?component";
@@ -13,9 +14,11 @@ import illustration3 from "/@/assets/login/illustration3.svg?component";
 import illustration4 from "/@/assets/login/illustration4.svg?component";
 import illustration5 from "/@/assets/login/illustration5.svg?component";
 import illustration6 from "/@/assets/login/illustration6.svg?component";
-
+import { getLogin } from "/@/api/user";
+import { ElMessage } from "element-plus";
+import { setToken } from "/@/utils/auth";
 const router = useRouter();
-
+const userStore = useUserStoreHook();
 // eslint-disable-next-line vue/return-in-computed-property
 const currentWeek = computed(() => {
   switch (String(new Date().getDay())) {
@@ -38,16 +41,24 @@ const currentWeek = computed(() => {
   }
 });
 
-let user = ref("admin");
+let user = ref("13337474745");
 let pwd = ref("123456");
 
-const onLogin = (): void => {
-  storageSession.setItem("info", {
-    username: "admin",
-    accessToken: "eyJhbGciOiJIUzUxMiJ9.test"
+const onLogin = async () => {
+  const data: any = await getLogin({
+    phone: user.value,
+    password: pwd.value
   });
-  initRouter("admin").then(() => {});
-  router.push("/");
+  if (data.code === 20000) {
+    userStore.SET_TOKEN(data.data?.accessToken);
+    storageSession.setItem("info", data.data.user);
+    setToken(data.data);
+    //通过权限获取列表
+    initRouter("admin").then(() => {});
+    router.push("/");
+  } else {
+    ElMessage.error("手机号与密码输入错误！");
+  }
 };
 
 function onUserFocus() {

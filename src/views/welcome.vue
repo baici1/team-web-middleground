@@ -1,10 +1,34 @@
 <script setup lang="ts">
 import { ReBar, ReInfo, ReInfinite, RePie } from "/@/components/ReCharts/index";
 import { ref } from "vue";
+import { getStudentInfo } from "/@/api/user";
+import { useUserStoreHook } from "/@/store/modules/user";
+import { ElMessage } from "element-plus";
+const userStore = useUserStoreHook();
 let loading = ref<boolean>(true);
 setTimeout(() => {
   loading.value = !loading.value;
 }, 800);
+//获取个人id
+const uid = userStore.userid;
+const Info = ref({} as any);
+//获取个人信息详情
+const get_studentInfo = async () => {
+  try {
+    const data: any = await getStudentInfo({
+      id: uid
+    });
+    console.log(
+      "%c 🦑 data: ",
+      "font-size:20px;background-color: #EA7E5C;color:#fff;",
+      data
+    );
+    Info.value = data.data;
+  } catch ({ response }) {
+    ElMessage.error("获取用户信息失败，请重新刷新！");
+  }
+};
+get_studentInfo();
 </script>
 
 <template>
@@ -39,7 +63,7 @@ setTimeout(() => {
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <ReInfo />
+              <ReInfo :info="Info" />
             </template>
           </el-skeleton>
         </el-card>
@@ -153,6 +177,6 @@ setTimeout(() => {
 }
 
 .warp {
-  height: 280px;
+  height: 450px;
 }
 </style>

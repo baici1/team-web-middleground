@@ -1,6 +1,6 @@
 import { App } from "vue";
 import { i18n } from "../i18n/index";
-import { timeFormat } from "/@/utils/time";
+import { timeFormat } from "../../utils/tools";
 import {
   // 核心
   VXETable,

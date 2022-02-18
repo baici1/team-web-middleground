@@ -27,7 +27,7 @@ module.exports = {
     ComponentRoutes: "readonly",
 
     // script setup
-    defineProps: "readonly",
+    defineProps: "true", //readonly
     defineEmits: "readonly",
     defineExpose: "readonly",
     withDefaults: "readonly"

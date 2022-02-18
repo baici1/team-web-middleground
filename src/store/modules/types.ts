@@ -37,8 +37,7 @@ export type setType = {
 
 export type userType = {
   token: string;
-  name?: string;
+  name: string;
+  phone: string;
   userid: number;
-  teamid?: number;
-  companyid?: number;
 };

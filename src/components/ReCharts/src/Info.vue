@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
+import { checkGender } from "/@/utils/tools";
 const lists = ref([
   { type: "", label: "善良" },
   { type: "success", label: "好学" }
 ]);
+const props = defineProps({
+  info: {
+    type: Object,
+    default: undefined
+  }
+} as any);
 </script>
 
 <template>
@@ -20,10 +28,7 @@ const lists = ref([
         </el-icon>
         头像
       </template>
-      <el-avatar
-        :size="35"
-        src="http://yiming_chang.gitee.io/manages/assets/avatars.596f7aa0.jpg"
-      ></el-avatar>
+      <el-avatar :size="35" :src="props.info.avatar"></el-avatar>
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -32,7 +37,7 @@ const lists = ref([
         </el-icon>
         姓名
       </template>
-      xiaoxian
+      {{ props.info.real_name }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -41,7 +46,75 @@ const lists = ref([
         </el-icon>
         性别
       </template>
-      男
+      {{ checkGender(props.info.gender) }}
+    </el-descriptions-item>
+  </el-descriptions>
+  <el-descriptions
+    class="margin-top"
+    direction="vertical"
+    :column="3"
+    :border="true"
+  >
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <IconifyIconOffline icon="picture-rounded" />
+        </el-icon>
+        学号
+      </template>
+      {{ props.info.student_id }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <IconifyIconOffline icon="user" />
+        </el-icon>
+        学历
+      </template>
+      {{ props.info.degree }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <IconifyIconOffline icon="iphone" />
+        </el-icon>
+        专业
+      </template>
+      {{ props.info.department }}--{{ props.info.major }}
+    </el-descriptions-item>
+  </el-descriptions>
+  <el-descriptions
+    class="margin-top"
+    direction="vertical"
+    :column="3"
+    :border="true"
+  >
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <IconifyIconOffline icon="iphone" />
+        </el-icon>
+        QQ
+      </template>
+      {{ props.info.QQ }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <IconifyIconOffline icon="user" />
+        </el-icon>
+        微信
+      </template>
+      {{ props.info.wechat }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <IconifyIconOffline icon="message-icon" />
+        </el-icon>
+        邮箱
+      </template>
+      249337001@qq.com
     </el-descriptions-item>
   </el-descriptions>
   <el-descriptions
@@ -55,26 +128,16 @@ const lists = ref([
         <el-icon>
           <IconifyIconOffline icon="tickets" />
         </el-icon>
-        身份
+        特长
       </template>
       <el-tag
         v-for="item in lists"
         :key="item.label"
-        :type="item.type"
         size="small"
         effect="dark"
       >
         {{ item.label }}
       </el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <el-icon>
-          <IconifyIconOffline icon="message-icon" />
-        </el-icon>
-        邮箱
-      </template>
-      249337001@qq.com
     </el-descriptions-item>
   </el-descriptions>
   <el-descriptions
@@ -90,9 +153,7 @@ const lists = ref([
         </el-icon>
         介绍
       </template>
-      好好学习，天天向上 好好学习，天天向上 好好学习，天天向上
-      好好学习，天天向上 好好学习，天天向上 好好学习，天天向上
-      好好学习，天天向上 好好学习，天天向上
+      {{ props.info.introduction }}
     </el-descriptions-item>
   </el-descriptions>
 </template>

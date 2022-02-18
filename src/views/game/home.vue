@@ -257,7 +257,11 @@ get_all_gameInfo();
             width="180"
           >
             <template #default="scope">
-              <el-select v-model="scope.row.identify" placeholder="请选择">
+              <el-select
+                v-model="scope.row.identify"
+                placeholder="请选择"
+                :disabled="scope.row.isEdit"
+              >
                 <el-option key="leader" :value="1" label="队长" />
                 <el-option key="member" :value="2" label="队员" />
               </el-select>
@@ -266,7 +270,10 @@ get_all_gameInfo();
           <el-table-column align="left" prop="phone" label="手机号" width="180">
             <template #default="scope">
               <div>
-                <el-input v-model="scope.row.phone" />
+                <el-input
+                  v-model="scope.row.phone"
+                  :disabled="scope.row.isEdit"
+                />
               </div>
             </template>
           </el-table-column>
@@ -277,7 +284,7 @@ get_all_gameInfo();
                   type="danger"
                   size="small"
                   :icon="Delete"
-                  :disabled="isEdit"
+                  :disabled="isEdit || scope.row.isEdit"
                   @click="deleteMember(Form.members, scope.$index)"
                   >删除</el-button
                 >
