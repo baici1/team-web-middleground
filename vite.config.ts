@@ -14,6 +14,8 @@ import themePreprocessorPlugin from "@zougt/vite-plugin-theme-preprocessor";
 import styleImport from "vite-plugin-style-import";
 //处理icon
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
+import Components from "unplugin-vue-components/vite";
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 import path from "path";
 // 当前执行node命令时文件夹的地址（工作目录）
 const root: string = process.cwd();
@@ -85,6 +87,9 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     },
     plugins: [
       vue(),
+      Components({
+        resolvers: [AntDesignVueResolver()]
+      }),
       createSvgIconsPlugin({
         // 指定需要缓存的图标文件夹
         iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],

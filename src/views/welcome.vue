@@ -37,9 +37,9 @@ get_studentInfo();
       <el-col
         :xs="24"
         :sm="24"
-        :md="12"
-        :lg="12"
-        :xl="12"
+        :md="14"
+        :lg="14"
+        :xl="14"
         style="margin-bottom: 20px"
         v-motion
         :initial="{
@@ -68,46 +68,12 @@ get_studentInfo();
           </el-skeleton>
         </el-card>
       </el-col>
-
       <el-col
         :xs="24"
         :sm="24"
-        :md="12"
-        :lg="12"
-        :xl="12"
-        style="margin-bottom: 20px"
-        v-motion
-        :initial="{
-          opacity: 0,
-          y: 100
-        }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          transition: {
-            delay: 200
-          }
-        }"
-      >
-        <el-card>
-          <template #header>
-            <span style="font-size: 16px; font-weight: 500">获奖信息</span>
-          </template>
-          <el-skeleton animated :rows="7" :loading="loading">
-            <template #default>
-              <ReInfinite class="warp" class-option="bottom" />
-            </template>
-          </el-skeleton>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row :gutter="24" style="margin: 20px">
-      <el-col
-        :xs="24"
-        :sm="24"
-        :md="12"
-        :lg="12"
-        :xl="12"
+        :md="10"
+        :lg="10"
+        :xl="10"
         style="margin-bottom: 20px"
         v-motion
         :initial="{
@@ -135,12 +101,48 @@ get_studentInfo();
           </el-skeleton>
         </el-card>
       </el-col>
+    </el-row>
+    <el-row :gutter="24" style="margin: 20px">
       <el-col
         :xs="24"
         :sm="24"
-        :md="12"
-        :lg="12"
-        :xl="12"
+        :md="14"
+        :lg="14"
+        :xl="14"
+        style="margin-bottom: 20px"
+        v-motion
+        :initial="{
+          opacity: 0,
+          y: 100
+        }"
+        :enter="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 200
+          }
+        }"
+      >
+        <el-card>
+          <template #header class="card-header">
+            <div class="card-header">
+              <span style="font-size: 16px; font-weight: 500">获奖信息</span>
+              <el-button class="button" type="text">更多</el-button>
+            </div>
+          </template>
+          <el-skeleton animated :rows="7" :loading="loading">
+            <template #default>
+              <ReInfinite class="warp" class-option="bottom" />
+            </template>
+          </el-skeleton>
+        </el-card>
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="24"
+        :md="10"
+        :lg="10"
+        :xl="10"
         style="margin-bottom: 20px"
         v-motion
         :initial="{
