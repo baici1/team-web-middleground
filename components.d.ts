@@ -9,7 +9,6 @@ declare module "vue" {
     AListItem: typeof import("ant-design-vue/es")["ListItem"];
     AListItemMeta: typeof import("ant-design-vue/es")["ListItemMeta"];
     Avatar: typeof import("./src/components/Reupload/src/avatar.vue")["default"];
-    Avator: typeof import("./src/components/Reupload/src/avator.vue")["default"];
     Bar: typeof import("./src/components/ReCharts/src/Bar.vue")["default"];
     Icon: typeof import("./src/components/ReIcon/src/Icon.vue")["default"];
     Infinite: typeof import("./src/components/ReCharts/src/Infinite.vue")["default"];
