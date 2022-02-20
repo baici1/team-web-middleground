@@ -24,10 +24,6 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-.main-content {
-  margin: 0;
-}
-
 .top-content {
   display: flex;
   justify-content: space-between;

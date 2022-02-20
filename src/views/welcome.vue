@@ -2,15 +2,28 @@
 import { ReBar, ReInfo, ReInfinite, RePie } from "/@/components/ReCharts/index";
 import { ref } from "vue";
 import { getStudentInfo } from "/@/api/user";
-import { useUserStoreHook } from "/@/store/modules/user";
 import { ElMessage } from "element-plus";
-const userStore = useUserStoreHook();
+import { useRouter } from "vue-router";
+import { storageLocal } from "/@/utils/storage";
+
+const router = useRouter();
 let loading = ref<boolean>(true);
 setTimeout(() => {
   loading.value = !loading.value;
 }, 800);
 //获取个人id
-const uid = userStore.userid;
+const info = storageLocal.getItem("info");
+console.log(
+  "%c 🍯 info: ",
+  "font-size:20px;background-color: #4b4b4b;color:#fff;",
+  info
+);
+const uid = info?.id;
+console.log(
+  "%c 🥞 uid: ",
+  "font-size:20px;background-color: #EA7E5C;color:#fff;",
+  uid
+);
 const Info = ref({} as any);
 //获取个人信息详情
 const get_studentInfo = async () => {
@@ -29,6 +42,9 @@ const get_studentInfo = async () => {
   }
 };
 get_studentInfo();
+const auth_update = async () => {
+  router.push("/student/update");
+};
 </script>
 
 <template>
@@ -58,7 +74,9 @@ get_studentInfo();
           <template #header>
             <div class="card-header">
               <span style="font-size: 16px; font-weight: 500">个人信息</span>
-              <el-button class="button" type="text">编辑</el-button>
+              <el-button class="button" type="text" @click="auth_update"
+                >编辑</el-button
+              >
             </div>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">

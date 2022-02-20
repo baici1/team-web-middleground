@@ -34,11 +34,11 @@ export function setToken(data) {
   Cookies.set(TokenKey, dataString, {
     expires: expiresTime //(parseInt(expires) * 1000) / 86400000
   });
-  sessionStorage.setItem(TokenKey, dataString);
+  localStorage.setItem(TokenKey, dataString);
 }
 
 // 删除token
 export function removeToken() {
   Cookies.remove(TokenKey);
-  sessionStorage.removeItem(TokenKey);
+  localStorage.removeItem(TokenKey);
 }

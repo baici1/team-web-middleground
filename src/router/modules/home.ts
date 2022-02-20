@@ -23,6 +23,16 @@ const homeRouter = {
         i18n: true,
         showLink: true
       }
+    },
+    {
+      path: "/student/update",
+      name: "authInfo",
+      component: () => import("/@/views/editor/student.vue"),
+      meta: {
+        title: $t("menus.hsinfoUpdate"),
+        i18n: true,
+        showLink: false
+      }
     }
   ]
 };

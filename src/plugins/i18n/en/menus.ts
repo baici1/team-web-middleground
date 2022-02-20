@@ -9,6 +9,7 @@ export default {
   hsgameManagement: "Game Manage",
   hsgameManageInfo: "Game Info",
   hsBaseinfo: "Base Info",
+  hsinfoUpdate: "Info Update",
   hsDict: "Dict Manage",
   hseditor: "Editor",
   hserror: "Error Page",

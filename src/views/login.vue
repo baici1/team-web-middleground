@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { initRouter } from "/@/router/utils";
-import { storageSession } from "/@/utils/storage";
+import { storageLocal } from "/@/utils/storage";
 import { useUserStoreHook } from "/@/store/modules/user";
 import { addClass, removeClass } from "/@/utils/operate";
 import bg from "/@/assets/login/bg.png";
@@ -51,7 +51,7 @@ const onLogin = async () => {
   });
   if (data.code === 20000) {
     userStore.SET_TOKEN(data.data?.accessToken);
-    storageSession.setItem("info", data.data.user);
+    storageLocal.setItem("info", data.data.user);
     setToken(data.data);
     //通过权限获取列表
     initRouter("admin").then(() => {});

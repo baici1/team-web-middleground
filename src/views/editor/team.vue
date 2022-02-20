@@ -255,7 +255,7 @@ let commit = async (
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .main-content {
   margin: 0;
 }

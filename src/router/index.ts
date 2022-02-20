@@ -1,3 +1,4 @@
+import { storageLocal } from "/@/utils/storage";
 import { getToken } from "/@/utils/auth";
 import { toRouteType } from "./types";
 import { openLink } from "/@/utils/link";
@@ -6,7 +7,6 @@ import { constantRoutes } from "./modules";
 import { split, findIndex } from "lodash-es";
 import { transformI18n } from "/@/plugins/i18n";
 import remainingRouter from "./modules/remaining";
-import { storageSession } from "/@/utils/storage";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 import { usePermissionStoreHook } from "/@/store/modules/permission";
 import { Router, RouteMeta, createRouter, RouteRecordName } from "vue-router";
@@ -58,7 +58,7 @@ router.beforeEach((to: toRouteType, _from, next) => {
     }
   }
   //获取Session的内容
-  const name = storageSession.getItem("info");
+  const name = storageLocal.getItem("info");
   console.log(
     "%c 🌰 name: ",
     "font-size:20px;background-color: #6EC1C2;color:#fff;",
@@ -80,7 +80,7 @@ router.beforeEach((to: toRouteType, _from, next) => {
         : "";
     });
   //判断是否存在token
-  if (token) {
+  if (token && name) {
     //存在重定向的地址，就跳转到重定向地址去，如果不存在，就是正常路由跳转，就可以直接跳转next()
     if (_from?.name) {
       // 如果路由包含http 则是超链接 反之是普通路由

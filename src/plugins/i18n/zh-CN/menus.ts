@@ -9,6 +9,7 @@ export default {
   hsgameManagement: "竞赛管理",
   hsgameManageInfo: "竞赛统计",
   hsBaseinfo: "基础信息",
+  hsinfoUpdate: "信息编辑",
   hsDict: "字典管理",
   hseditor: "编辑器",
   hserror: "错误页面",
