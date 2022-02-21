@@ -1,74 +1,84 @@
-<script setup lang="ts">
+<template>
+  <el-upload
+    class="avatar-uploader"
+    action="http://127.0.0.1:20201/admin/upload/a_file"
+    :show-file-list="false"
+    :on-success="handleAvatarSuccess"
+    :before-upload="beforeAvatarUpload"
+    :headers="header"
+  >
+    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+    <el-icon v-else class="avatar-uploader-icon"><plus /></el-icon>
+  </el-upload>
+</template>
+
+<script lang="ts" setup>
 import { ref } from "vue";
-import "babel-polyfill";
-import myUpload from "vue-image-crop-upload";
-const show = ref(false);
-const params = ref({
-  token: "123456798",
-  name: "avatar"
-});
-const headers = ref({
-  smail: "*_~"
-});
-const imgDataUrl = ref(""); // the datebase64 url of created image
-function toggleShow() {
-  show.value = !show.value;
-}
-/**
- * crop success
- *
- * [param] imgDataUrl
- * [param] field
- */
-function cropSuccess(imgDataUrl, field) {
+import { ElMessage } from "element-plus";
+import { Plus } from "@element-plus/icons-vue";
+import { storageLocal } from "/@/utils/storage";
+
+const imageUrl = ref("");
+const handleAvatarSuccess = (res: any, file: any) => {
   console.log(
-    "%c 🍿 field: ",
-    "font-size:20px;background-color: #EA7E5C;color:#fff;",
-    field
+    "%c 🍕 file: ",
+    "font-size:20px;background-color: #4b4b4b;color:#fff;",
+    file
   );
-  console.log("-------- crop success --------");
-  imgDataUrl.value = imgDataUrl;
-}
-/**
- * upload success
- *
- * [param] jsonData   服务器返回数据，已进行json转码
- * [param] field
- */
-function cropUploadSuccess(jsonData, field) {
-  console.log("-------- upload success --------");
-  console.log(jsonData);
-  console.log("field: " + field);
-}
-/**
- * upload fail
- *
- * [param] status    server api return error status, like 500
- * [param] field
- */
-function cropUploadFail(status, field) {
-  console.log("-------- upload fail --------");
-  console.log(status);
-  console.log("field: " + field);
-}
+  console.log(
+    "%c 🧀 res: ",
+    "font-size:20px;background-color: #E41A6A;color:#fff;",
+    res
+  );
+  imageUrl.value = "http://127.0.0.1:20201" + res?.data.path;
+  console.log(
+    "%c 🎂 imageUrl: ",
+    "font-size:20px;background-color: #93C0A4;color:#fff;",
+    imageUrl.value
+  );
+};
+const beforeAvatarUpload = (file: any) => {
+  const isJPG = file.type === "image/jpeg";
+  const isLt2M = file.size / 1024 / 1024 < 2;
+
+  if (!isJPG) {
+    ElMessage.error("Avatar picture must be JPG format!");
+  }
+  if (!isLt2M) {
+    ElMessage.error("Avatar picture size can not exceed 2MB!");
+  }
+  return isJPG && isLt2M;
+};
+const header = ref({
+  Authorization:
+    "Bearer " + storageLocal.getItem("authorized-token").accessToken
+} as any);
 </script>
 
-<template>
-  <div class="avator">
-    <a class="btn" @click="toggleShow">设置头像</a>
-    <my-upload
-      field="img"
-      @crop-success="cropSuccess"
-      @crop-upload-success="cropUploadSuccess"
-      @crop-upload-fail="cropUploadFail"
-      v-model="show"
-      :width="300"
-      :height="300"
-      url="/upload"
-      :params="params"
-      :headers="headers"
-      img-format="png"
-    ></my-upload>
-    <img :src="imgDataUrl" />
-  </div>
-</template>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

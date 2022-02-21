@@ -12,7 +12,8 @@ import {
   commitData,
   get_team_id,
   get_team_info,
-  get_company_info
+  get_company_info,
+  changeflagCompany
 } from "./utils/team";
 import { useUserStoreHook } from "/@/store/modules/user";
 import { ElForm, ElMessage } from "element-plus";
@@ -68,10 +69,10 @@ let commit = async (
   let data: commitData = {
     u_id: userStore.userid,
     flag: flagCompany.value,
-    ateaminfo: formDataTeam.value
+    teaminfo: formDataTeam.value
   };
   if (valid1) {
-    if (valid2 && flagCompany.value) {
+    if (valid2) {
       data.companyinfo = formDataCompany.value;
     }
     const res: any = await commitTeam(data, flagTeam.value);
@@ -154,6 +155,7 @@ let commit = async (
               <el-switch
                 v-model="flagCompany"
                 :disabled="!flagTeam"
+                @click="changeflagCompany"
               ></el-switch>
             </el-form-item>
             <!-- <el-form-item size="large">

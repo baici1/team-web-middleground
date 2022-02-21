@@ -69,6 +69,15 @@ export const rulesCompany = ref({
 });
 //判断是否需要提交公司信息
 export const flagCompany = ref(false);
+export const changeflagCompany = val => {
+  if (!val) {
+    formDataCompany.value = {
+      name: undefined,
+      address: undefined,
+      introduction: undefined
+    };
+  }
+};
 //判断当前是创建还是修改
 export const flagTeam = ref(true);
 //发起请求获取团队id
@@ -119,6 +128,6 @@ export const create_team_leader = async () => {
 export type commitData = {
   u_id?: number;
   flag: boolean;
-  ateaminfo: any;
+  teaminfo: any;
   companyinfo?: any;
 };
