@@ -16,10 +16,7 @@
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,css,scss,postcss,less}\" --cache --cache-location node_modules/.cache/stylelint/",
-    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
-    "lint:pretty": "pretty-quick --staged",
     "lint": "pnpm lint:eslint && pnpm lint:prettier && pnpm lint:stylelint",
-    "prepare": "husky install",
     "preinstall": "npx only-allow pnpm"
   },
   "browserslist": [
@@ -64,6 +61,7 @@
     "vue-i18n": "^9.2.0-beta.26",
     "vue-router": "^4.0.12",
     "vue-types": "^4.1.1",
+    "vue3-carousel": "^0.1.36",
     "vxe-table": "^4.1.20",
     "webpack": "^5.68.0",
     "xe-utils": "3"
@@ -94,6 +92,7 @@
     "eslint-plugin-vue": "7.17.0",
     "husky": "7.0.2",
     "lint-staged": "11.1.2",
+    "naive-ui": "^2.25.2",
     "postcss": "8.2.6",
     "postcss-import": "14.0.0",
     "prettier": "2.3.2",

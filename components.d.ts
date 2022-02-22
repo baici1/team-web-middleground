@@ -2,23 +2,23 @@
 // We suggest you to commit this file into source control
 // Read more: https://github.com/vuejs/vue-next/pull/3399
 
-declare module "vue" {
+declare module 'vue' {
   export interface GlobalComponents {
-    AAvatar: typeof import("ant-design-vue/es")["Avatar"];
-    AList: typeof import("ant-design-vue/es")["List"];
-    AListItem: typeof import("ant-design-vue/es")["ListItem"];
-    AListItemMeta: typeof import("ant-design-vue/es")["ListItemMeta"];
-    AModal: typeof import("ant-design-vue/es")["Modal"];
-    AUpload: typeof import("ant-design-vue/es")["Upload"];
-    Avatar: typeof import("./src/components/Reupload/src/avatar.vue")["default"];
-    Bar: typeof import("./src/components/ReCharts/src/Bar.vue")["default"];
-    Icon: typeof import("./src/components/ReIcon/src/Icon.vue")["default"];
-    Infinite: typeof import("./src/components/ReCharts/src/Infinite.vue")["default"];
-    Info: typeof import("./src/components/ReCharts/src/Info.vue")["default"];
-    Pie: typeof import("./src/components/ReCharts/src/Pie.vue")["default"];
-    Src: typeof import("./src/components/ReSeamlessScroll/src/index.vue")["default"];
-    Tip: typeof import("./src/components/ReTip/src/tip.vue")["default"];
+    AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    AList: typeof import('ant-design-vue/es')['List']
+    AListItem: typeof import('ant-design-vue/es')['ListItem']
+    AListItemMeta: typeof import('ant-design-vue/es')['ListItemMeta']
+    AModal: typeof import('ant-design-vue/es')['Modal']
+    AUpload: typeof import('ant-design-vue/es')['Upload']
+    Avatar: typeof import('./src/components/Reupload/src/avatar.vue')['default']
+    Bar: typeof import('./src/components/ReCharts/src/Bar.vue')['default']
+    Icon: typeof import('./src/components/ReIcon/src/Icon.vue')['default']
+    Infinite: typeof import('./src/components/ReCharts/src/Infinite.vue')['default']
+    Info: typeof import('./src/components/ReCharts/src/Info.vue')['default']
+    Pie: typeof import('./src/components/ReCharts/src/Pie.vue')['default']
+    Src: typeof import('./src/components/ReSeamlessScroll/src/index.vue')['default']
+    Tip: typeof import('./src/components/ReTip/src/tip.vue')['default']
   }
 }
 
-export {};
+export { }
