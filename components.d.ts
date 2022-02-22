@@ -8,6 +8,8 @@ declare module "vue" {
     AList: typeof import("ant-design-vue/es")["List"];
     AListItem: typeof import("ant-design-vue/es")["ListItem"];
     AListItemMeta: typeof import("ant-design-vue/es")["ListItemMeta"];
+    AModal: typeof import("ant-design-vue/es")["Modal"];
+    AUpload: typeof import("ant-design-vue/es")["Upload"];
     Avatar: typeof import("./src/components/Reupload/src/avatar.vue")["default"];
     Bar: typeof import("./src/components/ReCharts/src/Bar.vue")["default"];
     Icon: typeof import("./src/components/ReIcon/src/Icon.vue")["default"];

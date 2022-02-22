@@ -1,7 +1,7 @@
 {
   "Version": "2.8.5",
   "Title": "PureAdmin",
-  "FixedHeader": true,
+  "FixedHeader": false,
   "HiddenSideBar": false,
   "MultiTagsCache": false,
   "KeepAlive": true,

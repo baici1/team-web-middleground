@@ -1,7 +1,7 @@
 <template>
   <el-upload
     class="avatar-uploader"
-    action="http://127.0.0.1:20201/admin/upload/a_file"
+    action="http://47.113.203.60:20201/admin/upload/a_file"
     :show-file-list="false"
     :on-success="handleAvatarSuccess"
     :before-upload="beforeAvatarUpload"
@@ -13,29 +13,37 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import { storageLocal } from "/@/utils/storage";
 
 const imageUrl = ref("");
+const props = defineProps({
+  avatarUrl: {
+    type: String,
+    default: ""
+  }
+});
+watch(
+  () => props.avatarUrl,
+  newVal => {
+    if (newVal.length > 0) {
+      imageUrl.value = newVal;
+    }
+  },
+  {
+    immediate: true, // 立即执行
+    deep: true // 深度监听
+  }
+);
 const handleAvatarSuccess = (res: any, file: any) => {
   console.log(
     "%c 🍕 file: ",
     "font-size:20px;background-color: #4b4b4b;color:#fff;",
     file
   );
-  console.log(
-    "%c 🧀 res: ",
-    "font-size:20px;background-color: #E41A6A;color:#fff;",
-    res
-  );
-  imageUrl.value = "http://127.0.0.1:20201" + res?.data.path;
-  console.log(
-    "%c 🎂 imageUrl: ",
-    "font-size:20px;background-color: #93C0A4;color:#fff;",
-    imageUrl.value
-  );
+  imageUrl.value = "http://47.113.203.60:20201" + res?.data.path;
 };
 const beforeAvatarUpload = (file: any) => {
   const isJPG = file.type === "image/jpeg";
@@ -58,7 +66,7 @@ const header = ref({
 <style>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
-  border-radius: 6px;
+  border-radius: 50%;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -71,14 +79,14 @@ const header = ref({
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
-  height: 178px;
+  width: 70px;
+  height: 70px;
   text-align: center;
 }
 
 .avatar {
-  width: 178px;
-  height: 178px;
+  width: 70px;
+  height: 70px;
   display: block;
 }
 </style>

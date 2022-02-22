@@ -77,8 +77,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
                 class="demo-ruleForm"
                 label-position="right"
               >
-                <el-form-item label="avatar" prop="avatar">
-                  <ReAvatar></ReAvatar>
+                <el-form-item label="avatar">
+                  <ReAvatar :avatar-url="form.avatar"></ReAvatar>
                 </el-form-item>
                 <el-form-item label="real_name" prop="real_name">
                   <el-input v-model="form.real_name"></el-input>
