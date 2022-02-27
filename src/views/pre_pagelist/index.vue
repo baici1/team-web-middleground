@@ -6,7 +6,7 @@
       </el-header>
       <el-main class="main-box">
         <el-row justify="center" :gutter="20">
-          <el-col :span="2" :xs="0">
+          <el-col :xs="0" :sm="6" :md="4" :lg="3" :xl="1">
             <el-menu
               default-active="双创活动"
               class="menu"
@@ -14,11 +14,11 @@
               @select="handleSelect"
             >
               <el-menu-item index="双创活动" class="menu-item">
-                <SvgIcon name="bar-chart-2-line"></SvgIcon>
+                <el-icon :size="20"><histogram /></el-icon>
                 <span>双创活动</span>
               </el-menu-item>
               <el-menu-item index="新闻动态" class="menu-item">
-                <SvgIcon name="message-line"></SvgIcon>
+                <el-icon :size="20"><chat-round /></el-icon>
                 <span>新闻动态</span>
               </el-menu-item>
               <el-menu-item index="通知公告" class="menu-item">
@@ -31,7 +31,7 @@
               </el-menu-item>
             </el-menu>
           </el-col>
-          <el-col :span="12" :xs="24">
+          <el-col :sm="18" :md="20" :lg="16" :xl="17" :xs="24">
             <div class="list-box">
               <div class="list-title">
                 <el-breadcrumb>
@@ -100,7 +100,12 @@ import Header from "/@/views/pre_home/components/header.vue";
 import Footer from "/@/views/pre_home/components/footer.vue";
 import { useRoute } from "vue-router";
 import { ref } from "vue";
-import { DataAnalysis, Goods } from "@element-plus/icons-vue";
+import {
+  DataAnalysis,
+  Goods,
+  ChatRound,
+  Histogram
+} from "@element-plus/icons-vue";
 import { GetSpecificArticles } from "/@/api/pre_home";
 import { timeFormatMD } from "/@/utils/tools";
 import { NEllipsis } from "naive-ui";

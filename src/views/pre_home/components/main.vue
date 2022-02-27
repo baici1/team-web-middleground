@@ -1,6 +1,6 @@
 <template>
   <div class="Main">
-    <el-row justify="center">
+    <el-row justify="center" :gutter="20">
       <el-col :span="12" :xs="22">
         <div class="Main-left">
           <!-- 轮播图 -->
@@ -29,16 +29,16 @@
                     <div class="news-header">
                       <div class="nleft">
                         <span>
-                          <ReSvgIcon name="bar-chart-2-line"></ReSvgIcon>
+                          <el-icon :size="20"><histogram /></el-icon>
                           双创活动
                         </span>
                         <!-- <img src="https://static.lanqiao.cn/dasai/images/20210818/title/notice.png" /> -->
                       </div>
                       <div class="nright">
                         <router-link :to="{ name: 'List' }">
-                          <el-button class="button" type="text"
-                            >查看更多</el-button
-                          >
+                          <el-button class="button" type="text">
+                            查看更多
+                          </el-button>
                         </router-link>
 
                         <img
@@ -71,7 +71,7 @@
                     <div class="news-header">
                       <div class="nleft">
                         <span>
-                          <ReSvgIcon name="message-line"></ReSvgIcon>
+                          <el-icon :size="20"><chat-round /></el-icon>
                           新闻动态
                         </span>
                         <!-- <img src="https://static.lanqiao.cn/dasai/images/20210818/title/news.png" /> -->
@@ -227,14 +227,20 @@
     <div class="Part">
       <div class="title">优秀教师</div>
       <el-row justify="center">
-        <el-col :xl="16" :lg="16" :md="16" :xs="24"></el-col>
+        <el-col :xl="16" :lg="16" :md="16" :xs="24">
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item v-for="item in 6" :key="item">
+              <h3>{{ item }}</h3>
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
       </el-row>
       <div class="title">优秀团队</div>
       <el-row justify="center">
-        <el-col :xl="16" :lg="16" :md="16" :xs="24"></el-col>
+        <el-col :xl="16" :lg="16" :md="16" :xs="24"><teacher></teacher></el-col>
       </el-row>
-      <svg-icon name="undraw_tree_swing_re_pqee" class="icon-left"></svg-icon>
-      <svg-icon name="undraw_well_done_i2wr" class="icon-right"></svg-icon>
+      <ReSvgIcon name="undraw_tree_swing_re_pqee" class="icon-left"></ReSvgIcon>
+      <ReSvgIcon name="undraw_well_done_i2wr" class="icon-right"></ReSvgIcon>
     </div>
   </div>
 </template>
@@ -248,11 +254,17 @@ import {
   GetCompetitionTimeList
 } from "/@/api/pre_home";
 import { ref } from "vue";
-import { DataAnalysis, Goods } from "@element-plus/icons-vue";
+import {
+  DataAnalysis,
+  Goods,
+  ChatRound,
+  Histogram
+} from "@element-plus/icons-vue";
 import { ReSvgIcon } from "/@/components/ReSvgIcon/index";
 import { useRouter } from "vue-router";
 import { timeFormatMD, getYear, timeFormatYMD } from "/@/utils/tools";
 import { NEllipsis } from "naive-ui";
+import teacher from "./teacher.vue";
 const router = useRouter();
 // 获取轮播图
 const show = ref([true, true, true, true]);
@@ -461,5 +473,20 @@ function ToDetail(id) {
   .icon-right {
     display: none;
   }
+}
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
+}
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 </style>

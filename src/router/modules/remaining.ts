@@ -14,6 +14,36 @@ const remainingRouter = [
     }
   },
   {
+    path: "/pre_home",
+    name: "preHome",
+    component: () => import("/@/views/pre_home/index.vue"),
+    meta: {
+      title: $t("menus.hslogin"),
+      showLink: false,
+      i18n: true
+    }
+  },
+  {
+    path: "/list",
+    name: "List",
+    component: () => import("/@/views/pre_pagelist/index.vue"),
+    meta: {
+      title: $t("menus.hslogin"),
+      showLink: false,
+      i18n: true
+    }
+  },
+  {
+    path: "/page/detail/:id",
+    name: "Details",
+    component: () => import("/@/views/pre_details/index.vue"),
+    meta: {
+      title: $t("menus.hslogin"),
+      showLink: false,
+      i18n: true
+    }
+  },
+  {
     path: "/redirect",
     name: "redirect",
     component: Layout,

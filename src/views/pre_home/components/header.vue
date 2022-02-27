@@ -2,7 +2,7 @@
   <nav>
     <div class="top">
       <div class="top-left">
-        <img src="@/assets/logo.png" alt="qmx" />
+        <img src="../../../assets/logo.png" alt="qmx" />
         <div class="top-left_text">创新创业官网</div>
       </div>
       <div class="top-right">

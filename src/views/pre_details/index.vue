@@ -43,6 +43,11 @@ import { ElMessage } from "element-plus";
 // 获取id
 const route = useRoute();
 const id = route.params.id;
+console.log(
+  "%c 🍔 id: ",
+  "font-size:20px;background-color: #6EC1C2;color:#fff;",
+  id
+);
 const article = ref([] as any);
 let articeDetail = async () => {
   try {
