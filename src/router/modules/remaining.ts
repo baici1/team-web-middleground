@@ -18,7 +18,7 @@ const remainingRouter = [
     name: "preHome",
     component: () => import("/@/views/pre_home/index.vue"),
     meta: {
-      title: $t("menus.hslogin"),
+      title: $t("menus.hshome"),
       showLink: false,
       i18n: true
     }
@@ -28,7 +28,7 @@ const remainingRouter = [
     name: "List",
     component: () => import("/@/views/pre_pagelist/index.vue"),
     meta: {
-      title: $t("menus.hslogin"),
+      title: $t("menus.hsList"),
       showLink: false,
       i18n: true
     }
@@ -38,7 +38,17 @@ const remainingRouter = [
     name: "Details",
     component: () => import("/@/views/pre_details/index.vue"),
     meta: {
-      title: $t("menus.hslogin"),
+      title: $t("menus.hsPageDetail"),
+      showLink: false,
+      i18n: true
+    }
+  },
+  {
+    path: "/preGame/home",
+    name: "PreGame",
+    component: () => import("/@/views/pre_game/index.vue"),
+    meta: {
+      title: $t("menus.hsPageDetail"),
       showLink: false,
       i18n: true
     }

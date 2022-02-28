@@ -20,7 +20,10 @@
         <el-input v-model="competition" placeholder="输入比赛名">
           <template #append>
             <el-button @click="DoSearch">
-              <ReSvgIcon name="search-line"></ReSvgIcon>
+              <ReSvgIcon
+                name="search-line"
+                style="width: 1em; height: 1em"
+              ></ReSvgIcon>
             </el-button>
           </template>
         </el-input>

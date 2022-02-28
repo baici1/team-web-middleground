@@ -5,10 +5,12 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    AButton: typeof import('ant-design-vue/es')['Button']
     AList: typeof import('ant-design-vue/es')['List']
     AListItem: typeof import('ant-design-vue/es')['ListItem']
     AListItemMeta: typeof import('ant-design-vue/es')['ListItemMeta']
     APagination: typeof import('ant-design-vue/es')['Pagination']
+    ASpin: typeof import('ant-design-vue/es')['Spin']
     Avatar: typeof import('./src/components/Reupload/src/avatar.vue')['default']
     Bar: typeof import('./src/components/ReCharts/src/Bar.vue')['default']
     Icon: typeof import('./src/components/ReIcon/src/Icon.vue')['default']

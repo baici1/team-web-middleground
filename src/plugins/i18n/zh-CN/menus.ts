@@ -1,6 +1,8 @@
 export default {
   hshome: "首页",
   hslogin: "登陆",
+  hsList: "文章列表",
+  hsPageDetail: "文章详情",
   hssysManagement: "系统管理",
   hsteamManagement: "团队管理",
   hsteamManageInfo: "信息管理",

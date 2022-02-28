@@ -1,6 +1,8 @@
 export default {
   hshome: "Home",
   hslogin: "Login",
+  hsList: "page List",
+  hsPageDetail: "page detail",
   hssysManagement: "System Manage",
   hsteamManagement: "Team Manage",
   hsteamManageInfo: "Info Manage",
