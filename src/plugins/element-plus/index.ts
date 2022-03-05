@@ -60,6 +60,7 @@ import {
   ElTimelineItem,
   ElCarousel,
   ElCarouselItem,
+  ElCheckbox,
   // 指令
   ElLoading,
   ElInfiniteScroll
@@ -127,6 +128,7 @@ const components = [
   ElCarousel,
   ElCarouselItem,
   ElUpload,
+  ElCheckbox,
   ElCollapseItem,
   ElTreeV2
 ];

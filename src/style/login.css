@@ -121,6 +121,21 @@
   width: 50%;
 }
 
+.input-group.err .icon i {
+  color: red;
+}
+
+.input-group.err div h5 {
+  top: -5px;
+  font-size: 15px;
+}
+
+.input-group.err::after,
+.input-group.err::before {
+  width: 50%;
+  background-color: red;
+}
+
 .input {
   position: absolute;
   width: 100%;

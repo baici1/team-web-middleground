@@ -15,7 +15,12 @@ export const getVerify = (): userType => {
 export const getLogin = (data: object) => {
   return http.request("post", "http://127.0.0.1:20201/users/login", { data });
 };
-
+//注册
+export const getRegister = (data: object) => {
+  return http.request("post", "http://127.0.0.1:20201/users/register", {
+    data
+  });
+};
 // 刷新token
 export const refreshToken = (data: object) => {
   return http.request("post", "/refreshToken", { data });
