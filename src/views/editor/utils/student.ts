@@ -1,3 +1,4 @@
+import { storageSession } from "./../../../utils/storage/index";
 import { ElMessage } from "element-plus";
 import { storageLocal } from "/@/utils/storage";
 import { ref, nextTick } from "vue";
@@ -212,6 +213,9 @@ export const get_studentInfo = async () => {
 //修改学生详情信息
 export const update_studentInfo = async () => {
   form.value.specialty = dynamicTags.value.join(",");
+  if (storageSession.getItem("avatar") != "") {
+    form.value.avatar = storageSession.getItem("avatar");
+  }
   const data = await updateStudentInfo(form.value);
   console.log(
     "%c 🦐 data: ",

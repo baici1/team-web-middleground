@@ -16,7 +16,7 @@
 import { ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
-import { storageLocal } from "/@/utils/storage";
+import { storageLocal, storageSession } from "/@/utils/storage";
 
 const imageUrl = ref("");
 const props = defineProps({
@@ -43,7 +43,8 @@ const handleAvatarSuccess = (res: any, file: any) => {
     "font-size:20px;background-color: #4b4b4b;color:#fff;",
     file
   );
-  imageUrl.value = "http://47.113.203.60:20201" + res?.data.path;
+  imageUrl.value = "http://img.yangdiy.cn/" + res?.data.path;
+  storageSession.setItem("avatar", imageUrl.value);
 };
 const beforeAvatarUpload = (file: any) => {
   const isJPG = file.type === "image/jpeg";
