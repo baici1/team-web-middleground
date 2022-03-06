@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 import { checkGender } from "/@/utils/tools";
-const lists = ref([
-  { type: "", label: "善良" },
-  { type: "success", label: "好学" }
-]);
+// const lists = ref([
+//   { type: "", label: "善良" },
+//   { type: "success", label: "好学" }
+// ]);
 const props = defineProps({
   info: {
     type: Object,
@@ -131,12 +129,12 @@ const props = defineProps({
         特长
       </template>
       <el-tag
-        v-for="item in lists"
+        v-for="item in props.info.lists"
         :key="item.label"
         size="small"
         effect="dark"
       >
-        {{ item.label }}
+        {{ item }}
       </el-tag>
     </el-descriptions-item>
   </el-descriptions>

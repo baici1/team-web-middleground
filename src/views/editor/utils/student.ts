@@ -1,10 +1,9 @@
-import { storageSession } from "./../../../utils/storage/index";
-import { ElMessage } from "element-plus";
 import { storageLocal } from "/@/utils/storage";
 import { ref, nextTick } from "vue";
-import { getStudentInfo, updateStudentInfo } from "/@/api/user";
+import { getStudentInfo } from "/@/api/user";
 import type { ElInput } from "element-plus";
 export const greetings = ref("希望能有更多人认识你");
+
 //获取userid
 const info = storageLocal.getItem("info");
 const uid = info.id;
@@ -201,26 +200,7 @@ export const get_studentInfo = async () => {
   const data: any = await getStudentInfo({
     id: uid
   });
-  console.log(
-    "%c 🍏 data: ",
-    "font-size:20px;background-color: #2EAFB0;color:#fff;",
-    data
-  );
   form.value = data.data;
   //处理specialty
   dynamicTags.value = form.value.specialty.split(",");
-};
-//修改学生详情信息
-export const update_studentInfo = async () => {
-  form.value.specialty = dynamicTags.value.join(",");
-  if (storageSession.getItem("avatar") != "") {
-    form.value.avatar = storageSession.getItem("avatar");
-  }
-  const data = await updateStudentInfo(form.value);
-  console.log(
-    "%c 🦐 data: ",
-    "font-size:20px;background-color: #3F7CFF;color:#fff;",
-    data
-  );
-  ElMessage.success("信息更新成功");
 };

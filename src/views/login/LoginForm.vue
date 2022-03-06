@@ -3,7 +3,6 @@ import { computed, unref } from "vue";
 import { useRouter } from "vue-router";
 import { initRouter } from "/@/router/utils";
 import { getLogin } from "/@/api/user";
-import { ElMessage } from "element-plus";
 import { setToken } from "/@/utils/auth";
 import { storageLocal } from "/@/utils/storage";
 import { useUserStoreHook } from "/@/store/modules/user";
@@ -29,17 +28,14 @@ const onLogin = async () => {
     onInputErr(LoginForm.value.password, "pwd");
     return;
   }
-  try {
-    const data: any = await getLogin(LoginForm.value);
-    userStore.SET_TOKEN(data.data?.accessToken);
-    storageLocal.setItem("info", data.data.user);
-    setToken(data.data);
-    //通过权限获取列表
-    initRouter("admin").then(() => {});
-    router.push("/");
-  } catch (error) {
-    ElMessage.error("手机号与密码输入错误！");
-  }
+
+  const data: any = await getLogin(LoginForm.value);
+  userStore.SET_TOKEN(data.data?.accessToken);
+  storageLocal.setItem("info", data.data.user);
+  setToken(data.data);
+  //通过权限获取列表
+  initRouter("admin").then(() => {});
+  router.push("/");
 };
 
 const getShow = computed(() => unref(getFormState) === FormStateEnum.LOGIN);

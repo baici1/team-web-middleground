@@ -18,6 +18,7 @@ import { ElMessage, ElNotification } from "element-plus";
 import { useUserStoreHook } from "/@/store/modules/user";
 const xGrid = ref({} as VxeGridInstance);
 let id = useUserStoreHook().userid;
+const teamID = ref(0);
 const gridOptions = reactive({
   border: true, //是否带有边框
   resizable: true, //所有的列是否允许拖动列宽调整大小
@@ -140,6 +141,12 @@ const gridOptions = reactive({
             params: queryParams
           })
           .then(({ data }) => {
+            console.log(
+              "%c 🍷 data: ",
+              "font-size:20px;background-color: #42b983;color:#fff;",
+              data
+            );
+            teamID.value = data.data.result[0].team_id;
             return data.data;
           })
           .catch(({ response }) => {
@@ -179,11 +186,8 @@ const gridOptions = reactive({
       save: ({ body }) => {
         if (body.insertRecords.length > 0) {
           const user = body.insertRecords;
-          const $grid = xGrid.value;
-          const data = $grid.getData(1);
-          const teamid: number = data.team_id;
           const queryParams: any = {
-            team_id: teamid,
+            team_id: teamID.value,
             phone: user[0].phone,
             identify: +user[0].identify
           };
@@ -206,9 +210,7 @@ const gridOptions = reactive({
                 "font-size:20px;background-color: #4b4b4b;color:#fff;",
                 response
               );
-              if (response.data.code == 40101) {
-                ElMessage.error("填写内容错误！");
-              }
+              ElMessage.error(response.data.msg);
             });
         }
         if (body.updateRecords.length > 0) {

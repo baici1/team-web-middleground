@@ -37,6 +37,7 @@ const get_studentInfo = async () => {
       data
     );
     Info.value = data.data;
+    Info.value.lists = data.data?.specialty.split(",");
   } catch ({ response }) {
     ElMessage.error("获取用户信息失败，请重新刷新！");
   }

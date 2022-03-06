@@ -28,7 +28,7 @@ const props = defineProps({
 watch(
   () => props.avatarUrl,
   newVal => {
-    if (newVal.length > 0) {
+    if (newVal?.length > 0) {
       imageUrl.value = newVal;
     }
   },

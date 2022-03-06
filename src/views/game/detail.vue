@@ -6,8 +6,9 @@ import {
   get_a_gameInfo,
   formDetail,
   get_student_info,
-  studentsInfo
-} from "./utils/home";
+  studentsInfo,
+  handleNoData
+} from "./utils/detail";
 import { useRoute } from "vue-router";
 const route = useRoute();
 let isGame = ref(true);
@@ -125,13 +126,13 @@ run();
               {{ entry?.teacher }}
             </el-descriptions-item> -->
             <el-descriptions-item label="项目编号">
-              {{ formDetail.project?.project_code }}
+              {{ handleNoData(formDetail.project?.project_code) }}
             </el-descriptions-item>
             <el-descriptions-item label="项目名称">
-              {{ formDetail.project?.project_name }}
+              {{ handleNoData(formDetail.project?.project_name) }}
             </el-descriptions-item>
             <el-descriptions-item label="项目简介" :span="2">
-              {{ formDetail.project?.introduction }}
+              {{ handleNoData(formDetail.project?.introduction) }}
             </el-descriptions-item>
           </el-descriptions>
         </el-card>

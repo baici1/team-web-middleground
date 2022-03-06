@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { ReTip } from "/@/components/ReTip/index";
 import { ReAvatar } from "/@/components/Reupload/index";
+import { storageSession } from "/@/utils/storage/index";
+import { updateStudentInfo } from "/@/api/user";
 import {
   greetings,
   form,
   formRules,
   get_studentInfo,
-  update_studentInfo,
   inputValue,
   dynamicTags,
   inputVisible,
@@ -17,7 +19,7 @@ import {
 } from "./utils/student";
 import { ref } from "vue";
 import { ElForm, ElMessage } from "element-plus";
-
+const router = useRouter();
 type FormInstance = InstanceType<typeof ElForm>;
 
 const ruleFormRef = ref<FormInstance>();
@@ -38,6 +40,16 @@ const submitForm = (formEl: FormInstance | undefined) => {
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
+};
+//修改学生详情信息
+const update_studentInfo = async () => {
+  form.value.specialty = dynamicTags.value.join(",");
+  if (storageSession.getItem("avatar") != "") {
+    form.value.avatar = storageSession.getItem("avatar");
+  }
+  const data = await updateStudentInfo(form.value);
+  ElMessage.success("信息更新成功");
+  router.push({ name: "welcome" });
 };
 </script>
 
