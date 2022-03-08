@@ -20,7 +20,7 @@
             >
               <el-menu-item index="0">全部</el-menu-item>
               <el-menu-item index="1">报名中</el-menu-item>
-              <el-menu-item index="2">比赛中</el-menu-item>
+              <el-menu-item index="2">参赛中</el-menu-item>
               <el-menu-item index="3">已结束</el-menu-item>
             </el-menu>
             <!-- <n-tabs default-value="signin" size="large">
@@ -65,7 +65,14 @@
                             type="success"
                             size="small"
                             style="margin-left: 5px"
-                            >{{ Comstatus[+item.status] }}</el-tag
+                            >{{
+                              checkComStatus(
+                                item.start_time,
+                                item.end_time,
+                                item.r_start_time,
+                                item.r_end_time
+                              )
+                            }}</el-tag
                           >
                           <el-tag
                             type="info"
@@ -91,9 +98,9 @@
                               color: rgb(136, 136, 136);
                             "
                           >
-                            报名时间： {{ item.start_time }}
+                            报名时间： {{ timeFormatYMD(item.start_time) }}
                             <el-divider direction="vertical"></el-divider>
-                            截止时间：{{ item.end_time }}
+                            截止时间：{{ timeFormatYMD(item.end_time) }}
                             <el-divider direction="vertical"></el-divider>
                             举办方：{{ item.organizer }}
                           </p>
@@ -141,85 +148,20 @@
 import Header from "/@/views/pre_home/components/header.vue";
 // import { NTabs, NTabPane } from 'naive-ui';
 // import { More } from '@element-plus/icons-vue';
-import { ref } from "vue";
-import { GetCompetitions } from "/@/api/pre_home";
 import Banner from "./components/banner.vue";
-import { ElMessage } from "element-plus";
+import { timeFormatYMD, checkComStatus } from "/@/utils/tools";
+import {
+  getSearchStr,
+  getcompetition,
+  handleSelect,
+  activities,
+  isMore,
+  loading,
+  loadingMore,
+  loadMore
+} from "./index";
 
-// 获取文章列表
-const comParams = ref({
-  page: 1,
-  limit: 10,
-  status: "",
-  search: ""
-});
-
-const Comstatus = ["未开始", "报名中", "进行中", "结束中"];
-const activities = ref([]);
-const loading = ref(false);
-const isMore = ref(true);
-let getcompetition = async (flag?: any) => {
-  try {
-    isMore.value = true;
-    loading.value = true;
-    const { data }: any = await GetCompetitions(comParams.value);
-    console.log(
-      "%c 🌮 data: ",
-      "font-size:20px;background-color: #ED9EC7;color:#fff;",
-      data
-    );
-    activities.value.push(...data.records);
-    // 判断当前菜单是否发生变化
-    if (flag) {
-      activities.value = data.records;
-    }
-    // 判断是否需要继续加载
-    if (activities.value.length >= data.total) {
-      isMore.value = false;
-    }
-  } catch (error) {
-    ElMessage.error(error.response.data.msg);
-    activities.value = [];
-    isMore.value = false;
-  } finally {
-    loading.value = false;
-  }
-};
 getcompetition();
-// 获取查询字段
-const getSearchStr = search => {
-  console.log(
-    "%c 🍷 search: ",
-    "font-size:20px;background-color: #3F7CFF;color:#fff;",
-    search
-  );
-  comParams.value.search = search;
-  console.log(
-    "%c 🍬 comParams.value: ",
-    "font-size:20px;background-color: #FFDD4D;color:#fff;",
-    comParams.value
-  );
-
-  getcompetition(1);
-};
-// 获取更多
-const loadingMore = ref(false);
-let loadMore = () => {
-  loadingMore.value = true;
-  comParams.value.page += 1;
-  getcompetition();
-  loadingMore.value = false;
-};
-// 交换标签获取比赛信息
-const handleSelect = key => {
-  comParams.value.page = 1;
-  if (Number(key) > 0) {
-    comParams.value.status = key;
-  } else {
-    comParams.value.status = "";
-  }
-  getcompetition(1);
-};
 </script>
 
 <style lang="scss" scoped>

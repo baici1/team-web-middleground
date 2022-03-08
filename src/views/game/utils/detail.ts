@@ -1,6 +1,7 @@
 import { getAGameInfo } from "/@/api/game";
 import { getStudentInfo } from "/@/api/user";
 import { ref } from "vue";
+import { VxeColumnPropTypes } from "vxe-table";
 type formType = {
   form: any;
   project: any;
@@ -36,8 +37,27 @@ export const get_student_info = async id => {
 //处理返回的数据进行计算属性
 //处理无数据
 export const handleNoData = val => {
-  if (val?.length == 0) {
+  console.log(
+    "%c 🍡 val: ",
+    "font-size:20px;background-color: #4b4b4b;color:#fff;",
+    val
+  );
+  if (val == undefined || val?.length == 0) {
     return "无";
   }
   return val;
+};
+const projectStatus = ["审核中", "已参赛", "已结束"];
+export const handleStatus = val => {
+  return projectStatus[val];
+};
+
+//表格格式化内容
+export const formatterGender: VxeColumnPropTypes.Formatter = ({
+  cellValue
+}) => {
+  if (cellValue == 1) {
+    return "男";
+  }
+  return "女";
 };

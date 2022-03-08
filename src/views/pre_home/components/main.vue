@@ -313,7 +313,7 @@ const activities = ref([
     icon: "el-icon-more",
     id: 123,
     level: "比赛",
-    url: "/game",
+    url: "/preGame/home",
     type: ""
   }
 ]);

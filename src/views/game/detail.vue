@@ -7,7 +7,9 @@ import {
   formDetail,
   get_student_info,
   studentsInfo,
-  handleNoData
+  handleNoData,
+  handleStatus,
+  formatterGender
 } from "./utils/detail";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -114,13 +116,13 @@ run();
               {{ studentsInfo[0]?.real_name }}
             </el-descriptions-item>
             <el-descriptions-item label="申请状态">
-              <el-tag> {{ formDetail.form?.status }}</el-tag>
+              <el-tag> {{ handleStatus(formDetail.form?.status) }}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="获奖名称">
-              {{ formDetail.form?.rank }}
+              {{ handleNoData(formDetail.form?.rank) }}
             </el-descriptions-item>
             <el-descriptions-item label="成果展示">
-              <el-tag> {{ formDetail.form?.ach_name }}</el-tag>
+              <el-tag> {{ handleNoData(formDetail.form?.ach_name) }}</el-tag>
             </el-descriptions-item>
             <!-- <el-descriptions-item label="指导老师">
               {{ entry?.teacher }}
@@ -173,11 +175,15 @@ run();
             <vxe-column type="seq" width="60"></vxe-column>
             <vxe-column field="real_name" title="Name" width="100"></vxe-column>
             <vxe-column field="email" title="email" width="150"></vxe-column>
-            <vxe-column field="gender" title="gender" width="100"></vxe-column>
+            <vxe-column
+              field="gender"
+              title="gender"
+              width="100"
+              :formatter="formatterGender"
+            ></vxe-column>
             <vxe-column field="degree" title="degree" width="100"></vxe-column>
             <vxe-column field="grade" title="grade" width="100"></vxe-column>
             <vxe-column field="QQ" title="QQ" width="100"></vxe-column>
-            <vxe-column field="order" title="order" width="100"></vxe-column>
             <vxe-column field="major" title="major" width="100"></vxe-column>
             <vxe-column
               field="class_num"
